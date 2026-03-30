@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Matches - SL Amigos do Chiti vs Túnel do Grilo FC</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/chart.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>⚽ Weekly Monday Matches</h1>
+    <p class="subtitle">SL Amigos do Chiti vs Túnel do Grilo FC</p>
+  </header>
+
+  <main>
+    <!-- Overall Stats Table -->
+    <section id="overall-stats">
+      <h2>Overall Statistics</h2>
+      <div class="table-container">
+        <table id="stats-table">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>Played</th>
+              <th>Wins</th>
+              <th>Draws</th>
+              <th>Defeats</th>
+              <th>Goals Scored</th>
+              <th>Goals Allowed</th>
+              <th>Goal Difference</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Overall Charts -->
+    <section id="overall-charts">
+      <h2>Overall Charts</h2>
+      <div class="charts-grid">
+        <div class="chart-card">
+          <h3>Wins / Draws / Defeats</h3>
+          <canvas id="results-chart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Goals Scored vs Allowed</h3>
+          <canvas id="goals-chart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Monthly Stats -->
+    <section id="monthly-stats">
+      <h2>Monthly Statistics</h2>
+      <div id="monthly-tables"></div>
+      <div class="charts-grid" id="monthly-charts"></div>
+    </section>
+
+    <!-- Match History -->
+    <section id="match-history">
+      <h2>Match History</h2>
+      <div class="table-container">
+        <table id="history-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Home Team</th>
+              <th>Score</th>
+              <th>Away Team</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Weekly Monday Matches &copy; 2025</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
