@@ -1,7 +1,6 @@
-const TEAMS = ["SL Amigos do Chiti", "Túnel do Grilo FC"];
 const TEAM_COLORS = {
-  "SL Amigos do Chiti": { bg: "rgba(15,52,96,0.7)", border: "#0f3460" },
-  "Túnel do Grilo FC": { bg: "rgba(226,55,68,0.7)", border: "#e23744" },
+  amigos: { bg: "rgba(15,52,96,0.7)", border: "#0f3460" },
+  tunel:  { bg: "rgba(226,55,68,0.7)", border: "#e23744" },
 };
 const MONTH_NAMES = [
   "January", "February", "March", "April", "May", "June",
@@ -53,15 +52,15 @@ function monthLabel(key) {
 
 /* ---------- rendering ---------- */
 
-function renderOverallTable(matches) {
+function renderOverallTable(matches, teams) {
   const tbody = document.querySelector("#stats-table tbody");
   tbody.innerHTML = "";
 
-  TEAMS.forEach((team) => {
-    const s = computeTeamStats(matches, team);
+  teams.forEach((team) => {
+    const s = computeTeamStats(matches, team.name);
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td style="text-align:left;font-weight:600">${team}</td>
+      <td style="text-align:left;font-weight:600">${team.name}</td>
       <td>${s.played}</td>
       <td>${s.wins}</td>
       <td>${s.draws}</td>
@@ -94,14 +93,15 @@ function renderMatchHistory(matches) {
 
 /* ---------- charts ---------- */
 
-function renderOverallCharts(matches) {
-  const stats = TEAMS.map((t) => computeTeamStats(matches, t));
+function renderOverallCharts(matches, teams) {
+  const teamNames = teams.map((t) => t.name);
+  const stats = teamNames.map((t) => computeTeamStats(matches, t));
 
   // Results bar chart
   new Chart(document.getElementById("results-chart"), {
     type: "bar",
     data: {
-      labels: TEAMS,
+      labels: teamNames,
       datasets: [
         { label: "Wins", data: stats.map((s) => s.wins), backgroundColor: "#27ae60" },
         { label: "Draws", data: stats.map((s) => s.draws), backgroundColor: "#f39c12" },
@@ -115,7 +115,7 @@ function renderOverallCharts(matches) {
   new Chart(document.getElementById("goals-chart"), {
     type: "bar",
     data: {
-      labels: TEAMS,
+      labels: teamNames,
       datasets: [
         { label: "Goals Scored", data: stats.map((s) => s.scored), backgroundColor: "#0f3460" },
         { label: "Goals Allowed", data: stats.map((s) => s.allowed), backgroundColor: "#e23744" },
@@ -125,7 +125,7 @@ function renderOverallCharts(matches) {
   });
 }
 
-function renderMonthlySection(matches) {
+function renderMonthlySection(matches, teams) {
   const months = groupByMonth(matches);
   const sortedKeys = Object.keys(months).sort();
 
@@ -138,7 +138,7 @@ function renderMonthlySection(matches) {
   sortedKeys.forEach((key) => {
     const wrapper = document.createElement("div");
     wrapper.className = "monthly-table-wrapper";
-    const stats = TEAMS.map((t) => ({ team: t, ...computeTeamStats(months[key], t) }));
+    const stats = teams.map((t) => ({ team: t.name, ...computeTeamStats(months[key], t.name) }));
 
     wrapper.innerHTML = `
       <h3>${monthLabel(key)}</h3>
@@ -168,22 +168,22 @@ function renderMonthlySection(matches) {
   });
 
   // Monthly trend line chart per team
-  TEAMS.forEach((team) => {
+  teams.forEach((team) => {
     const card = document.createElement("div");
     card.className = "chart-card";
     const canvas = document.createElement("canvas");
-    card.innerHTML = `<h3>${team} – Monthly Trends</h3>`;
+    card.innerHTML = `<h3>${team.name} – Monthly Trends</h3>`;
     card.appendChild(canvas);
     chartsContainer.appendChild(card);
 
     const labels = sortedKeys.map(monthLabel);
-    const winsData = sortedKeys.map((k) => computeTeamStats(months[k], team).wins);
-    const drawsData = sortedKeys.map((k) => computeTeamStats(months[k], team).draws);
-    const defeatsData = sortedKeys.map((k) => computeTeamStats(months[k], team).defeats);
-    const scoredData = sortedKeys.map((k) => computeTeamStats(months[k], team).scored);
-    const allowedData = sortedKeys.map((k) => computeTeamStats(months[k], team).allowed);
+    const winsData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).wins);
+    const drawsData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).draws);
+    const defeatsData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).defeats);
+    const scoredData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).scored);
+    const allowedData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).allowed);
 
-    const colors = TEAM_COLORS[team];
+    const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
 
     new Chart(canvas, {
       type: "line",
@@ -212,12 +212,23 @@ function renderMonthlySection(matches) {
 
 async function init() {
   const response = await fetch("data/matches.json");
-  const matches = await response.json();
+  const data = await response.json();
 
-  renderOverallTable(matches);
+  const teams = data.teams;
+  const teamMap = {};
+  teams.forEach((t) => { teamMap[t.id] = t.name; });
+
+  // Resolve team IDs to full names so downstream code works with names
+  const matches = data.matches.map((m) => ({
+    ...m,
+    homeTeam: teamMap[m.home],
+    awayTeam: teamMap[m.away],
+  }));
+
+  renderOverallTable(matches, teams);
   renderMatchHistory(matches);
-  renderOverallCharts(matches);
-  renderMonthlySection(matches);
+  renderOverallCharts(matches, teams);
+  renderMonthlySection(matches, teams);
 }
 
 document.addEventListener("DOMContentLoaded", init);

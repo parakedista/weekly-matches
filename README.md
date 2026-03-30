@@ -11,19 +11,21 @@ A static website that tracks weekly Monday football matches between **SL Amigos 
 
 ## Data
 
-Match data is stored in [`data/matches.json`](data/matches.json). Each entry has the following structure:
+Match data is stored in [`data/matches.json`](data/matches.json). The file contains a `teams` array (with short IDs and full names) and a `matches` array that references teams by ID:
 
 ```json
 {
-  "date": "2025-01-06",
-  "homeTeam": "SL Amigos do Chiti",
-  "awayTeam": "Túnel do Grilo FC",
-  "homeGoals": 3,
-  "awayGoals": 1
+  "teams": [
+    { "id": "amigos", "name": "SL Amigos do Chiti" },
+    { "id": "tunel",  "name": "Túnel do Grilo FC"  }
+  ],
+  "matches": [
+    { "date": "2025-01-06", "home": "amigos", "away": "tunel", "homeGoals": 3, "awayGoals": 1 }
+  ]
 }
 ```
 
-To add a new match, append a new object to the JSON array with the match date (always a Monday), the home/away teams and goal counts.
+To add a new match, append a new object to the `matches` array with the match date (always a Monday), the home/away team IDs and goal counts.
 
 ## Running locally
 
