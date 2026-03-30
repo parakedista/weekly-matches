@@ -42,4 +42,4 @@ Then open [http://localhost:8000](http://localhost:8000) (or the port shown by y
 ## Technologies
 
 - Vanilla HTML / CSS / JavaScript
-- [Chart.js](https://www.chartjs.org/) (loaded from CDN) for data visualisation
+- [Chart.js](https://www.chartjs.org/) (vendored locally in `js/chart.min.js`) for data visualisation
