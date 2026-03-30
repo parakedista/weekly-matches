@@ -1,0 +1,181 @@
+/* ── Reset & base ─────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --amigos: #1a6b3a;
+  --amigos-light: #d4edda;
+  --tunel:  #1a3a6b;
+  --tunel-light:  #cce0ff;
+  --bg:     #f4f6f9;
+  --card:   #ffffff;
+  --text:   #212529;
+  --muted:  #6c757d;
+  --border: #dee2e6;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+header {
+  background: linear-gradient(135deg, var(--amigos) 0%, #0d4d29 50%, var(--tunel) 100%);
+  color: #fff;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+}
+
+header h1 { font-size: 2rem; font-weight: 700; letter-spacing: .5px; }
+header p  { margin-top: .4rem; opacity: .85; font-size: 1rem; }
+
+/* ── Layout ───────────────────────────────────────────────── */
+main { max-width: 1100px; margin: 0 auto; padding: 2rem 1rem; }
+
+section { margin-bottom: 2.5rem; }
+
+section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  padding-bottom: .4rem;
+  border-bottom: 2px solid var(--border);
+  color: var(--text);
+}
+
+/* ── Card ─────────────────────────────────────────────────── */
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+/* ── Stats table ──────────────────────────────────────────── */
+.table-responsive { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .95rem;
+}
+
+thead th {
+  background: #f0f2f5;
+  padding: .65rem 1rem;
+  text-align: center;
+  font-weight: 600;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+thead th:first-child { text-align: left; }
+
+tbody td {
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+}
+
+tbody td:first-child { text-align: left; font-weight: 600; }
+
+tbody tr:last-child td { border-bottom: none; }
+
+tbody tr:hover { background: #fafafa; }
+
+.team-badge {
+  display: inline-block;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.badge-amigos { background: var(--amigos); }
+.badge-tunel  { background: var(--tunel);  }
+
+.win  { color: #198754; font-weight: 700; }
+.loss { color: #dc3545; font-weight: 700; }
+.draw { color: #fd7e14; font-weight: 700; }
+
+/* ── Charts grid ──────────────────────────────────────────── */
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.chart-container { position: relative; height: 280px; }
+
+/* ── Monthly table ────────────────────────────────────────── */
+#monthly-section .month-block { margin-bottom: 1.5rem; }
+
+#monthly-section .month-block h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: .6rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* ── Recent matches list ──────────────────────────────────── */
+.matches-list { list-style: none; }
+
+.match-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .6rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: .9rem;
+}
+
+.match-item:last-child { border-bottom: none; }
+
+.match-date { color: var(--muted); min-width: 100px; }
+
+.match-score {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: .2rem .75rem;
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+.match-teams { flex: 1; text-align: center; padding: 0 .5rem; }
+
+/* ── Loading / error ──────────────────────────────────────── */
+#loading {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.1rem;
+  color: var(--muted);
+}
+
+.error-msg {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  color: #664d03;
+}
+
+/* ── Footer ───────────────────────────────────────────────── */
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: .85rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ── Responsive tweaks ────────────────────────────────────── */
+@media (max-width: 600px) {
+  header h1 { font-size: 1.4rem; }
+  .match-item { flex-wrap: wrap; gap: .3rem; }
+}

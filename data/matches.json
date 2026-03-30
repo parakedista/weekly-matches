@@ -1,0 +1,20 @@
+{
+  "teams": [
+    { "id": "amigos", "name": "SL Amigos do Chiti" },
+    { "id": "tunel",  "name": "Túnel do Grilo FC"  }
+  ],
+  "matches": [
+    { "date": "2025-01-06", "home": "amigos", "away": "tunel", "homeGoals": 4, "awayGoals": 2 },
+    { "date": "2025-01-13", "home": "tunel",  "away": "amigos", "homeGoals": 1, "awayGoals": 3 },
+    { "date": "2025-01-20", "home": "amigos", "away": "tunel", "homeGoals": 2, "awayGoals": 2 },
+    { "date": "2025-01-27", "home": "tunel",  "away": "amigos", "homeGoals": 3, "awayGoals": 1 },
+    { "date": "2025-02-03", "home": "amigos", "away": "tunel", "homeGoals": 5, "awayGoals": 1 },
+    { "date": "2025-02-10", "home": "tunel",  "away": "amigos", "homeGoals": 2, "awayGoals": 2 },
+    { "date": "2025-02-17", "home": "amigos", "away": "tunel", "homeGoals": 3, "awayGoals": 4 },
+    { "date": "2025-02-24", "home": "tunel",  "away": "amigos", "homeGoals": 0, "awayGoals": 2 },
+    { "date": "2025-03-03", "home": "amigos", "away": "tunel", "homeGoals": 1, "awayGoals": 1 },
+    { "date": "2025-03-10", "home": "tunel",  "away": "amigos", "homeGoals": 4, "awayGoals": 3 },
+    { "date": "2025-03-17", "home": "amigos", "away": "tunel", "homeGoals": 3, "awayGoals": 0 },
+    { "date": "2025-03-24", "home": "tunel",  "away": "amigos", "homeGoals": 1, "awayGoals": 4 }
+  ]
+}
