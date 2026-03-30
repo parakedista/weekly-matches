@@ -1,0 +1,86 @@
+[
+  {
+    "date": "2025-01-06",
+    "homeTeam": "SL Amigos do Chiti",
+    "awayTeam": "Túnel do Grilo FC",
+    "homeGoals": 3,
+    "awayGoals": 1
+  },
+  {
+    "date": "2025-01-13",
+    "homeTeam": "Túnel do Grilo FC",
+    "awayTeam": "SL Amigos do Chiti",
+    "homeGoals": 2,
+    "awayGoals": 2
+  },
+  {
+    "date": "2025-01-20",
+    "homeTeam": "SL Amigos do Chiti",
+    "awayTeam": "Túnel do Grilo FC",
+    "homeGoals": 0,
+    "awayGoals": 1
+  },
+  {
+    "date": "2025-01-27",
+    "homeTeam": "Túnel do Grilo FC",
+    "awayTeam": "SL Amigos do Chiti",
+    "homeGoals": 4,
+    "awayGoals": 2
+  },
+  {
+    "date": "2025-02-03",
+    "homeTeam": "SL Amigos do Chiti",
+    "awayTeam": "Túnel do Grilo FC",
+    "homeGoals": 2,
+    "awayGoals": 0
+  },
+  {
+    "date": "2025-02-10",
+    "homeTeam": "Túnel do Grilo FC",
+    "awayTeam": "SL Amigos do Chiti",
+    "homeGoals": 1,
+    "awayGoals": 3
+  },
+  {
+    "date": "2025-02-17",
+    "homeTeam": "SL Amigos do Chiti",
+    "awayTeam": "Túnel do Grilo FC",
+    "homeGoals": 1,
+    "awayGoals": 1
+  },
+  {
+    "date": "2025-02-24",
+    "homeTeam": "Túnel do Grilo FC",
+    "awayTeam": "SL Amigos do Chiti",
+    "homeGoals": 3,
+    "awayGoals": 2
+  },
+  {
+    "date": "2025-03-03",
+    "homeTeam": "SL Amigos do Chiti",
+    "awayTeam": "Túnel do Grilo FC",
+    "homeGoals": 2,
+    "awayGoals": 1
+  },
+  {
+    "date": "2025-03-10",
+    "homeTeam": "Túnel do Grilo FC",
+    "awayTeam": "SL Amigos do Chiti",
+    "homeGoals": 0,
+    "awayGoals": 0
+  },
+  {
+    "date": "2025-03-17",
+    "homeTeam": "SL Amigos do Chiti",
+    "awayTeam": "Túnel do Grilo FC",
+    "homeGoals": 4,
+    "awayGoals": 3
+  },
+  {
+    "date": "2025-03-24",
+    "homeTeam": "Túnel do Grilo FC",
+    "awayTeam": "SL Amigos do Chiti",
+    "homeGoals": 2,
+    "awayGoals": 1
+  }
+]
