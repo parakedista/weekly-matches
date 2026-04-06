@@ -78,7 +78,7 @@ function renderMatchHistory(matches) {
 
   [...matches].reverse().forEach((m) => {
     const d = new Date(m.date);
-    const dateStr = d.toLocaleDateString("en-GB", {
+    const dateStr = d.toLocaleDateString("pt-PT", {
       weekday: "short", year: "numeric", month: "short", day: "numeric",
     });
     const tr = document.createElement("tr");
@@ -146,8 +146,8 @@ function renderMonthlySection(matches, teams) {
         <table>
           <thead>
             <tr>
-              <th>Team</th><th>P</th><th>V</th><th>E</th><th>D</th>
-              <th>GM</th><th>GS</th><th>GD</th>
+              <th>Team</th><th>J</th><th>V</th><th>E</th><th>D</th>
+              <th>GM</th><th>GS</th><th>DG</th>
             </tr>
           </thead>
           <tbody>
