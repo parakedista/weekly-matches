@@ -84,9 +84,9 @@ function renderMatchHistory(matches) {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${dateStr}</td>
-      <td style="text-align:right">${m.homeTeam}</td>
+      <td>${m.homeTeam}</td>
       <td class="score-cell">${m.homeGoals} – ${m.awayGoals}</td>
-      <td style="text-align:left">${m.awayTeam}</td>`;
+      <td>${m.awayTeam}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -172,7 +172,7 @@ function renderMonthlySection(matches, teams) {
     const card = document.createElement("div");
     card.className = "chart-card";
     const canvas = document.createElement("canvas");
-    card.innerHTML = `<h3>${team.name} – Monthly Trends</h3>`;
+    card.innerHTML = `<h3>${team.name} – Tendências Mensais</h3>`;
     card.appendChild(canvas);
     chartsContainer.appendChild(card);
 
