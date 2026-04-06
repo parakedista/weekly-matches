@@ -79,7 +79,7 @@ function renderMatchHistory(matches) {
   [...matches].reverse().forEach((m) => {
     const d = new Date(m.date);
     const dateStr = d.toLocaleDateString("pt-PT", {
-      weekday: "short", year: "numeric", month: "short", day: "numeric",
+      year: "numeric", month: "short", day: "numeric",
     });
     const tr = document.createElement("tr");
     tr.innerHTML = `
