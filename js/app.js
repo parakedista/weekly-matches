@@ -3,8 +3,8 @@ const TEAM_COLORS = {
   tunel:  { bg: "rgba(226,55,68,0.7)", border: "#e23744" },
 };
 const MONTH_NAMES = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
 ];
 
 /* ---------- helpers ---------- */
@@ -103,9 +103,9 @@ function renderOverallCharts(matches, teams) {
     data: {
       labels: teamNames,
       datasets: [
-        { label: "Wins", data: stats.map((s) => s.wins), backgroundColor: "#27ae60" },
-        { label: "Draws", data: stats.map((s) => s.draws), backgroundColor: "#f39c12" },
-        { label: "Defeats", data: stats.map((s) => s.defeats), backgroundColor: "#e74c3c" },
+        { label: "Vitórias", data: stats.map((s) => s.wins), backgroundColor: "#27ae60" },
+        { label: "Empates", data: stats.map((s) => s.draws), backgroundColor: "#f39c12" },
+        { label: "Derrotas", data: stats.map((s) => s.defeats), backgroundColor: "#e74c3c" },
       ],
     },
     options: { responsive: true, plugins: { legend: { position: "bottom" } } },
@@ -117,8 +117,8 @@ function renderOverallCharts(matches, teams) {
     data: {
       labels: teamNames,
       datasets: [
-        { label: "Goals Scored", data: stats.map((s) => s.scored), backgroundColor: "#0f3460" },
-        { label: "Goals Allowed", data: stats.map((s) => s.allowed), backgroundColor: "#e23744" },
+        { label: "Golos Marcados", data: stats.map((s) => s.scored), backgroundColor: "#0f3460" },
+        { label: "Golos Sofridos", data: stats.map((s) => s.allowed), backgroundColor: "#e23744" },
       ],
     },
     options: { responsive: true, plugins: { legend: { position: "bottom" } } },
@@ -146,8 +146,8 @@ function renderMonthlySection(matches, teams) {
         <table>
           <thead>
             <tr>
-              <th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th>
-              <th>GS</th><th>GA</th><th>GD</th>
+              <th>Team</th><th>P</th><th>V</th><th>E</th><th>D</th>
+              <th>GM</th><th>GS</th><th>GD</th>
             </tr>
           </thead>
           <tbody>
@@ -190,11 +190,11 @@ function renderMonthlySection(matches, teams) {
       data: {
         labels,
         datasets: [
-          { label: "Wins", data: winsData, borderColor: "#27ae60", backgroundColor: "rgba(39,174,96,0.15)", fill: false, tension: 0.3 },
-          { label: "Draws", data: drawsData, borderColor: "#f39c12", backgroundColor: "rgba(243,156,18,0.15)", fill: false, tension: 0.3 },
-          { label: "Defeats", data: defeatsData, borderColor: "#e74c3c", backgroundColor: "rgba(231,76,60,0.15)", fill: false, tension: 0.3 },
-          { label: "Goals Scored", data: scoredData, borderColor: colors.border, backgroundColor: colors.bg, fill: false, tension: 0.3, borderDash: [5, 5] },
-          { label: "Goals Allowed", data: allowedData, borderColor: "#999", backgroundColor: "rgba(153,153,153,0.15)", fill: false, tension: 0.3, borderDash: [5, 5] },
+          { label: "Vitórias", data: winsData, borderColor: "#27ae60", backgroundColor: "rgba(39,174,96,0.15)", fill: false, tension: 0.3 },
+          { label: "Empates", data: drawsData, borderColor: "#f39c12", backgroundColor: "rgba(243,156,18,0.15)", fill: false, tension: 0.3 },
+          { label: "Derrotas", data: defeatsData, borderColor: "#e74c3c", backgroundColor: "rgba(231,76,60,0.15)", fill: false, tension: 0.3 },
+          { label: "Golos Marcados", data: scoredData, borderColor: colors.border, backgroundColor: colors.bg, fill: false, tension: 0.3, borderDash: [5, 5] },
+          { label: "Golos Sofridos", data: allowedData, borderColor: "#999", backgroundColor: "rgba(153,153,153,0.15)", fill: false, tension: 0.3, borderDash: [5, 5] },
         ],
       },
       options: {
