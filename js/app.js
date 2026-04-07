@@ -52,12 +52,33 @@ function monthLabel(key) {
 
 /* ---------- rendering ---------- */
 
+function getLastFiveResults(matches, teamName) {
+  return matches
+    .filter((m) => m.homeTeam === teamName || m.awayTeam === teamName)
+    .slice(-5)
+    .map((m) => {
+      const isHome = m.homeTeam === teamName;
+      const gf = isHome ? m.homeGoals : m.awayGoals;
+      const ga = isHome ? m.awayGoals : m.homeGoals;
+      if (gf > ga) return "W";
+      if (gf === ga) return "D";
+      return "L";
+    });
+}
+
+function renderFormBadges(results) {
+  return results
+    .map((r) => `<span class="form-badge form-badge--${r.toLowerCase()}">${r}</span>`)
+    .join("");
+}
+
 function renderOverallTable(matches, teams) {
   const tbody = document.querySelector("#stats-table tbody");
   tbody.innerHTML = "";
 
   teams.forEach((team) => {
     const s = computeTeamStats(matches, team.name);
+    const form = getLastFiveResults(matches, team.name);
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td style="text-align:left;font-weight:600">${team.name}</td>
@@ -67,7 +88,8 @@ function renderOverallTable(matches, teams) {
       <td>${s.defeats}</td>
       <td>${s.scored}</td>
       <td>${s.allowed}</td>
-      <td>${s.diff > 0 ? "+" : ""}${s.diff}</td>`;
+      <td>${s.diff > 0 ? "+" : ""}${s.diff}</td>
+      <td class="form-cell">${renderFormBadges(form)}</td>`;
     tbody.appendChild(tr);
   });
 }
