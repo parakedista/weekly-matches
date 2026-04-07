@@ -4,17 +4,14 @@
     { "id": "tunel",  "name": "Túnel do Grilo FC"  }
   ],
   "matches": [
-    { "date": "2025-01-06", "home": "amigos", "away": "tunel",  "homeGoals": 3, "awayGoals": 1 },
-    { "date": "2025-01-13", "home": "tunel",  "away": "amigos", "homeGoals": 2, "awayGoals": 2 },
-    { "date": "2025-01-20", "home": "amigos", "away": "tunel",  "homeGoals": 0, "awayGoals": 1 },
-    { "date": "2025-01-27", "home": "tunel",  "away": "amigos", "homeGoals": 4, "awayGoals": 2 },
-    { "date": "2025-02-03", "home": "amigos", "away": "tunel",  "homeGoals": 2, "awayGoals": 0 },
-    { "date": "2025-02-10", "home": "tunel",  "away": "amigos", "homeGoals": 1, "awayGoals": 3 },
-    { "date": "2025-02-17", "home": "amigos", "away": "tunel",  "homeGoals": 1, "awayGoals": 1 },
-    { "date": "2025-02-24", "home": "tunel",  "away": "amigos", "homeGoals": 3, "awayGoals": 2 },
-    { "date": "2025-03-03", "home": "amigos", "away": "tunel",  "homeGoals": 2, "awayGoals": 1 },
-    { "date": "2025-03-10", "home": "tunel",  "away": "amigos", "homeGoals": 0, "awayGoals": 0 },
-    { "date": "2025-03-17", "home": "amigos", "away": "tunel",  "homeGoals": 4, "awayGoals": 3 },
-    { "date": "2025-03-24", "home": "tunel",  "away": "amigos", "homeGoals": 2, "awayGoals": 1 }
+    { "date": "2026-01-05", "home": "amigos", "away": "tunel", "homeGoals": 6, "awayGoals": 8 },
+    { "date": "2026-01-12", "home": "amigos", "away": "tunel", "homeGoals": 10, "awayGoals": 7 },
+    { "date": "2026-01-19", "home": "amigos", "away": "tunel", "homeGoals": 1, "awayGoals": 7 },
+    { "date": "2026-01-26", "home": "amigos", "away": "tunel", "homeGoals": 3, "awayGoals": 7 },
+    { "date": "2026-02-09", "home": "amigos", "away": "tunel", "homeGoals": 6, "awayGoals": 8 },
+    { "date": "2026-02-16", "home": "amigos", "away": "tunel", "homeGoals": 5, "awayGoals": 6 },
+    { "date": "2026-02-23", "home": "amigos", "away": "tunel", "homeGoals": 12, "awayGoals": 8 },
+    { "date": "2026-03-02", "home": "amigos", "away": "tunel", "homeGoals": 7, "awayGoals": 1 },
+    { "date": "2026-03-09", "home": "amigos", "away": "tunel", "homeGoals": 2, "awayGoals": 9 },
   ]
 }
