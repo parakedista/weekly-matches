@@ -60,9 +60,9 @@ function getLastFiveResults(matches, teamName) {
       const isHome = m.homeTeam === teamName;
       const gf = isHome ? m.homeGoals : m.awayGoals;
       const ga = isHome ? m.awayGoals : m.homeGoals;
-      if (gf > ga) return "W";
-      if (gf === ga) return "D";
-      return "L";
+      if (gf > ga) return "V";
+      if (gf === ga) return "E";
+      return "D";
     });
 }
 
