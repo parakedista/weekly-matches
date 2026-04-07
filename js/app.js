@@ -116,34 +116,52 @@ function renderMatchHistory(matches) {
 /* ---------- charts ---------- */
 
 function renderOverallCharts(matches, teams) {
-  const teamNames = teams.map((t) => t.name);
-  const stats = teamNames.map((t) => computeTeamStats(matches, t));
+  const stats = teams.map((t) => computeTeamStats(matches, t.name));
+  const colors = teams.map((t) => TEAM_COLORS[t.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" });
 
-  // Results bar chart
+  // Results bar chart: one bar per team win + one bar for draws
+  const resultsLabels = [teams[0].name, "Empates", teams[1].name];
+  const resultsData = [stats[0].wins, stats[0].draws, stats[1].wins];
+  const resultsBg = [colors[0].bg, "rgba(243,156,18,0.7)", colors[1].bg];
+  const resultsBorder = [colors[0].border, "#f39c12", colors[1].border];
+
   new Chart(document.getElementById("results-chart"), {
     type: "bar",
     data: {
-      labels: teamNames,
+      labels: resultsLabels,
       datasets: [
-        { label: "Vitórias", data: stats.map((s) => s.wins), backgroundColor: "#27ae60" },
-        { label: "Empates", data: stats.map((s) => s.draws), backgroundColor: "#f39c12" },
-        { label: "Derrotas", data: stats.map((s) => s.defeats), backgroundColor: "#e74c3c" },
+        {
+          data: resultsData,
+          backgroundColor: resultsBg,
+          borderColor: resultsBorder,
+          borderWidth: 1,
+        },
       ],
     },
-    options: { responsive: true, plugins: { legend: { position: "bottom" } } },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+    },
   });
 
-  // Goals bar chart
+  // Goals bar chart: only scored goals per team, in team colors
   new Chart(document.getElementById("goals-chart"), {
     type: "bar",
     data: {
-      labels: teamNames,
+      labels: teams.map((t) => t.name),
       datasets: [
-        { label: "Golos Marcados", data: stats.map((s) => s.scored), backgroundColor: "#0f3460" },
-        { label: "Golos Sofridos", data: stats.map((s) => s.allowed), backgroundColor: "#e23744" },
+        {
+          data: stats.map((s) => s.scored),
+          backgroundColor: colors.map((c) => c.bg),
+          borderColor: colors.map((c) => c.border),
+          borderWidth: 1,
+        },
       ],
     },
-    options: { responsive: true, plugins: { legend: { position: "bottom" } } },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+    },
   });
 }
 
