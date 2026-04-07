@@ -118,6 +118,36 @@ tbody tr:hover {
   font-size: 1.1rem;
 }
 
+/* Form badges */
+.form-cell {
+  white-space: nowrap;
+}
+
+.form-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0.1rem;
+}
+
+.form-badge--w {
+  background-color: #27ae60;
+}
+
+.form-badge--d {
+  background-color: #f39c12;
+}
+
+.form-badge--l {
+  background-color: #e74c3c;
+}
+
 .winner-row {
   color: #16213e;
 }
