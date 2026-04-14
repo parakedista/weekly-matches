@@ -248,7 +248,66 @@ function renderMonthlySection(matches, teams) {
   });
 }
 
-/* ---------- init ---------- */
+/* ---------- player stats ---------- */
+
+function computePlayerStats(matches) {
+  const players = {};
+
+  matches.forEach((m) => {
+    const homeWon = m.homeGoals > m.awayGoals;
+    const draw    = m.homeGoals === m.awayGoals;
+
+    [
+      { list: m.homePlayers, teamId: m.home, won: homeWon, drew: draw },
+      { list: m.awayPlayers, teamId: m.away, won: !homeWon && !draw, drew: draw },
+    ].forEach(({ list, teamId, won, drew }) => {
+      if (!list) return;
+      list.forEach((name) => {
+        if (!players[name]) {
+          players[name] = { name, played: 0, wins: 0, draws: 0, losses: 0, teams: {} };
+        }
+        const p = players[name];
+        p.played++;
+        if (won)       p.wins++;
+        else if (drew) p.draws++;
+        else           p.losses++;
+        p.teams[teamId] = (p.teams[teamId] || 0) + 1;
+      });
+    });
+  });
+
+  return Object.values(players).sort(
+    (a, b) => b.played - a.played || a.name.localeCompare(b.name)
+  );
+}
+
+function renderPlayersTable(matches, teams) {
+  const stats = computePlayerStats(matches);
+  const tbody = document.querySelector("#players-table tbody");
+  tbody.innerHTML = "";
+
+  stats.forEach((p) => {
+    const winPct = p.played ? Math.round((p.wins / p.played) * 100) : 0;
+    const teamBadges = Object.entries(p.teams)
+      .map(([id, count]) => {
+        const team = teams.find((t) => t.id === id);
+        return `<span class="team-badge team-badge--${id}" title="${team ? team.name : id}">${team ? team.name : id} (${count})</span>`;
+      })
+      .join(" ");
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td style="text-align:left;font-weight:600">${p.name}</td>
+      <td>${p.played}</td>
+      <td class="team-badges-cell">${teamBadges}</td>
+      <td>${p.wins}</td>
+      <td>${p.draws}</td>
+      <td>${p.losses}</td>
+      <td>${winPct}%</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
 
 async function init() {
   const response = await fetch("data/matches.json");
@@ -269,6 +328,7 @@ async function init() {
   renderMatchHistory(matches);
   renderOverallCharts(matches, teams);
   renderMonthlySection(matches, teams);
+  renderPlayersTable(matches, teams);
 }
 
 document.addEventListener("DOMContentLoaded", init);
