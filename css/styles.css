@@ -152,6 +152,29 @@ tbody tr:hover {
   color: #16213e;
 }
 
+/* Team badges (player table) */
+.team-badges-cell {
+  white-space: nowrap;
+}
+
+.team-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0.15rem;
+}
+
+.team-badge--amigos {
+  background-color: #0f3460;
+}
+
+.team-badge--tunel {
+  background-color: #e23744;
+}
+
 /* Footer */
 footer {
   text-align: center;
