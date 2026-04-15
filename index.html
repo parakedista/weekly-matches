@@ -9,7 +9,7 @@
 </head>
 <body>
   <header>
-    <h1>⚽ Segundas Mágicas</h1>
+    <img src="img/segundas.png" alt="Segundas Mágicas Logo" class="logo">
     <p class="subtitle">SL Amigos do Chiti vs Túnel do Grilo FC</p>
   </header>
 
@@ -29,12 +29,18 @@
               <th>Golos Marcados</th>
               <th>Golos Sofridos</th>
               <th>Diferença Golos</th>
-              <th>Últimos 5</th>
+              <th>Últimos 5 Jogos</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
+    </section>
+
+    <!-- Rankings -->
+    <section id="rankings">
+      <h2>Rankings</h2>
+      <div class="rankings-grid" id="rankings-grid"></div>
     </section>
 
     <!-- Overall Charts -->
@@ -77,6 +83,10 @@
           </thead>
           <tbody></tbody>
         </table>
+        <div class="players-total-bar">
+          <span class="players-total-label">Total de Jogadores</span>
+          <span class="players-total-count" id="players-total"></span>
+        </div>
       </div>
     </section>
 
@@ -100,7 +110,7 @@
   </main>
 
   <footer>
-    <p>Rui Silva &copy; 2025</p>
+    <p>Rui Silva &copy; 2026</p>
   </footer>
 
   <script src="js/app.js"></script>

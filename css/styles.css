@@ -14,10 +14,14 @@ body {
 }
 
 header {
-  background: linear-gradient(135deg, #16213e, #0f3460);
+  background: linear-gradient(135deg, #0A0A0A 0%, #0F3D1E 40%, #2E7D32 100%);
   color: #fff;
   text-align: center;
   padding: 2rem 1rem;
+}
+
+header .logo {
+  max-width: 300px;
 }
 
 header h1 {
@@ -43,7 +47,7 @@ section {
 h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  border-bottom: 3px solid #0f3460;
+  border-bottom: 3px solid #6BDB2B;
   display: inline-block;
   padding-bottom: 0.25rem;
 }
@@ -63,7 +67,7 @@ table {
 }
 
 thead {
-  background: #16213e;
+  background: #0F3D1E;
   color: #fff;
 }
 
@@ -84,7 +88,7 @@ tbody tr:hover {
 /* Chart grid */
 .charts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 
@@ -168,11 +172,96 @@ tbody tr:hover {
 }
 
 .team-badge--amigos {
-  background-color: #0f3460;
+  background-color: #C8102E;
 }
 
 .team-badge--tunel {
-  background-color: #e23744;
+  background-color: #0B3C5D;
+}
+
+/* Players total bar */
+.players-total-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.players-total-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+}
+
+.players-total-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0.15rem 0.6rem;
+  background: #0F3D1E;
+  color: #6BDB2B;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 20px;
+}
+
+/* Rankings grid */
+.rankings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.ranking-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1.5rem 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  border-top: 4px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ranking-card--best {
+  border-top-color: #6BDB2B;
+}
+
+.ranking-card--worst {
+  border-top-color: #e74c3c;
+}
+
+.ranking-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.ranking-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+  font-weight: 600;
+}
+
+.ranking-highlight {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0F3D1E;
+}
+
+.ranking-detail {
+  font-size: 0.9rem;
+  color: #555;
 }
 
 /* Footer */
@@ -201,6 +290,10 @@ footer {
   }
 
   .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rankings-grid {
     grid-template-columns: 1fr;
   }
 }

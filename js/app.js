@@ -1,6 +1,6 @@
 const TEAM_COLORS = {
-  amigos: { bg: "rgba(15,52,96,0.7)", border: "#0f3460" },
-  tunel:  { bg: "rgba(226,55,68,0.7)", border: "#e23744" },
+  amigos: { bg: "rgba(200,16,46,0.7)",  border: "#C8102E" },
+  tunel:  { bg: "rgba(11,60,93,0.7)",   border: "#0B3C5D" },
 };
 const MONTH_NAMES = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
@@ -186,7 +186,7 @@ function renderMonthlySection(matches, teams) {
         <table>
           <thead>
             <tr>
-              <th>Team</th><th>J</th><th>V</th><th>E</th><th>D</th>
+              <th>Equipa</th><th>J</th><th>V</th><th>E</th><th>D</th>
               <th>GM</th><th>GS</th><th>DG</th>
             </tr>
           </thead>
@@ -207,14 +207,21 @@ function renderMonthlySection(matches, teams) {
     tablesContainer.appendChild(wrapper);
   });
 
-  // Monthly trend line chart per team
+  // Monthly trend charts per team, split by result trends and goal trends
   teams.forEach((team) => {
-    const card = document.createElement("div");
-    card.className = "chart-card";
-    const canvas = document.createElement("canvas");
-    card.innerHTML = `<h3>${team.name} – Tendências Mensais</h3>`;
-    card.appendChild(canvas);
-    chartsContainer.appendChild(card);
+    const resultsCard = document.createElement("div");
+    resultsCard.className = "chart-card";
+    const resultsCanvas = document.createElement("canvas");
+    resultsCard.innerHTML = `<h3>${team.name} – Resultados Mensais</h3>`;
+    resultsCard.appendChild(resultsCanvas);
+    chartsContainer.appendChild(resultsCard);
+
+    const goalsCard = document.createElement("div");
+    goalsCard.className = "chart-card";
+    const goalsCanvas = document.createElement("canvas");
+    goalsCard.innerHTML = `<h3>${team.name} – Golos Mensais</h3>`;
+    goalsCard.appendChild(goalsCanvas);
+    chartsContainer.appendChild(goalsCard);
 
     const labels = sortedKeys.map(monthLabel);
     const winsData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).wins);
@@ -225,7 +232,7 @@ function renderMonthlySection(matches, teams) {
 
     const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
 
-    new Chart(canvas, {
+    new Chart(resultsCanvas, {
       type: "line",
       data: {
         labels,
@@ -233,8 +240,6 @@ function renderMonthlySection(matches, teams) {
           { label: "Vitórias", data: winsData, borderColor: "#27ae60", backgroundColor: "rgba(39,174,96,0.15)", fill: false, tension: 0.3 },
           { label: "Empates", data: drawsData, borderColor: "#f39c12", backgroundColor: "rgba(243,156,18,0.15)", fill: false, tension: 0.3 },
           { label: "Derrotas", data: defeatsData, borderColor: "#e74c3c", backgroundColor: "rgba(231,76,60,0.15)", fill: false, tension: 0.3 },
-          { label: "Golos Marcados", data: scoredData, borderColor: colors.border, backgroundColor: colors.bg, fill: false, tension: 0.3, borderDash: [5, 5] },
-          { label: "Golos Sofridos", data: allowedData, borderColor: "#999", backgroundColor: "rgba(153,153,153,0.15)", fill: false, tension: 0.3, borderDash: [5, 5] },
         ],
       },
       options: {
@@ -245,6 +250,94 @@ function renderMonthlySection(matches, teams) {
         },
       },
     });
+
+    new Chart(goalsCanvas, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          { label: "Golos Marcados", data: scoredData, borderColor: colors.border, backgroundColor: colors.bg, fill: false, tension: 0.3 },
+          { label: "Golos Sofridos", data: allowedData, borderColor: "#999", backgroundColor: "rgba(153,153,153,0.15)", fill: false, tension: 0.3 },
+        ],
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { position: "bottom" } },
+        scales: {
+          y: { beginAtZero: true, ticks: { stepSize: 1 } },
+        },
+      },
+    });
+  });
+}
+
+/* ---------- rankings ---------- */
+
+function renderRankings(matches) {
+  const container = document.getElementById("rankings-grid");
+  container.innerHTML = "";
+
+  // --- Month rankings ---
+  const months = groupByMonth(matches);
+  const monthTotals = Object.entries(months).map(([key, ms]) => ({
+    label: monthLabel(key),
+    goals: ms.reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0),
+    games: ms.length,
+  }));
+
+  const bestMonth  = monthTotals.reduce((a, b) => (b.goals > a.goals ? b : a));
+  const worstMonth = monthTotals.reduce((a, b) => (b.goals < a.goals ? b : a));
+
+  // --- Match rankings ---
+  const matchTotals = matches.map((m) => ({
+    total: m.homeGoals + m.awayGoals,
+    label: `${m.homeTeam} ${m.homeGoals}–${m.awayGoals} ${m.awayTeam}`,
+    date: new Date(m.date).toLocaleDateString("pt-PT", { year: "numeric", month: "short", day: "numeric" }),
+  }));
+
+  const bestMatch  = matchTotals.reduce((a, b) => (b.total > a.total ? b : a));
+  const worstMatch = matchTotals.reduce((a, b) => (b.total < a.total ? b : a));
+
+  const cards = [
+    {
+      icon: "🏆",
+      title: "Mês com mais golos",
+      highlight: bestMonth.label,
+      detail: `${bestMonth.goals} golos em ${bestMonth.games} jogo${bestMonth.games !== 1 ? "s" : ""}`,
+      mod: "best",
+    },
+    {
+      icon: "📉",
+      title: "Mês com menos golos",
+      highlight: worstMonth.label,
+      detail: `${worstMonth.goals} golos em ${worstMonth.games} jogo${worstMonth.games !== 1 ? "s" : ""}`,
+      mod: "worst",
+    },
+    {
+      icon: "⚽",
+      title: "Jogo com mais golos",
+      highlight: bestMatch.label,
+      detail: `${bestMatch.total} golos · ${bestMatch.date}`,
+      mod: "best",
+    },
+    {
+      icon: "🔒",
+      title: "Jogo com menos golos",
+      highlight: worstMatch.label,
+      detail: `${worstMatch.total} golos · ${worstMatch.date}`,
+      mod: "worst",
+    },
+  ];
+
+  cards.forEach(({ icon, title, highlight, detail, mod }) => {
+    const card = document.createElement("div");
+    card.className = `ranking-card ranking-card--${mod}`;
+    card.innerHTML = `
+      <div class="ranking-icon">${icon}</div>
+      <div class="ranking-title">${title}</div>
+      <div class="ranking-highlight">${highlight}</div>
+      <div class="ranking-detail">${detail}</div>`;
+    container.appendChild(card);
   });
 }
 
@@ -284,6 +377,8 @@ function computePlayerStats(matches) {
 function renderPlayersTable(matches, teams) {
   const stats = computePlayerStats(matches);
   const tbody = document.querySelector("#players-table tbody");
+  const playersTotal = document.querySelector("#players-total");
+  playersTotal.innerHTML = stats.length.toString();
   tbody.innerHTML = "";
 
   stats.forEach((p) => {
@@ -328,6 +423,7 @@ async function init() {
   renderMatchHistory(matches);
   renderOverallCharts(matches, teams);
   renderMonthlySection(matches, teams);
+  renderRankings(matches);
   renderPlayersTable(matches, teams);
 }
 
