@@ -50,6 +50,52 @@ function monthLabel(key) {
   return `${MONTH_NAMES[parseInt(month, 10) - 1]} ${year}`;
 }
 
+/* ---------- next match ---------- */
+
+function getNextMatchDate(matches) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Build a set of dates already played
+  const played = new Set(matches.map((m) => m.date));
+
+  // Find next Monday >= today that has no recorded match
+  const day = today.getDay();
+  const daysToMonday = (8 - day) % 7; // 0 if today is Monday
+  const candidate = new Date(today);
+  candidate.setDate(today.getDate() + daysToMonday);
+
+  // If the candidate Monday already has a match, advance one more week
+  const candidateStr = candidate.toISOString().slice(0, 10);
+  if (played.has(candidateStr)) {
+    candidate.setDate(candidate.getDate() + 7);
+  }
+
+  return candidate;
+}
+
+function renderNextMatch(matches, teams) {
+  const nextDate = getNextMatchDate(matches);
+  const countdown = document.getElementById("nm-countdown");
+  const nextMatchDate = document.getElementById("nm-date");
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const daysUntil = Math.round((nextDate - today) / 86400000);
+
+  const dateStr = nextDate.toLocaleDateString("pt-PT", {
+    weekday: "long", year: "numeric", month: "long", day: "numeric",
+  });
+
+  let countdownLabel;
+  if (daysUntil === 0)      countdownLabel = `<span class="nm-today">Hoje! 🎉</span>`;
+  else if (daysUntil === 1) countdownLabel = `<span class="nm-soon">Amanhã</span>`;
+  else                      countdownLabel = `<span class="nm-days"><strong>${daysUntil}</strong> dias</span>`;
+
+  countdown.innerHTML = countdownLabel;
+  nextMatchDate.innerHTML = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+}
+
 /* ---------- rendering ---------- */
 
 function getLastFiveResults(matches, teamName) {
@@ -98,7 +144,7 @@ function renderMatchHistory(matches) {
   const tbody = document.querySelector("#history-table tbody");
   tbody.innerHTML = "";
 
-  [...matches].reverse().forEach((m, i) => {
+  [...matches].reverse().forEach((m) => {
     const d = new Date(m.date);
     const dateStr = d.toLocaleDateString("pt-PT", {
       year: "numeric", month: "short", day: "numeric",
@@ -459,6 +505,7 @@ async function init() {
     awayTeam: teamMap[m.away],
   }));
 
+  renderNextMatch(matches, teams);
   renderOverallTable(matches, teams);
   renderMatchHistory(matches);
   renderOverallCharts(matches, teams);

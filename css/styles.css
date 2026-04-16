@@ -21,7 +21,7 @@ header {
 }
 
 header .logo {
-  max-width: 300px;
+  max-width: 200px;
 }
 
 header h1 {
@@ -50,6 +50,124 @@ h2 {
   border-bottom: 3px solid #6BDB2B;
   display: inline-block;
   padding-bottom: 0.25rem;
+}
+
+/* Next match card */
+.nm-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
+  padding: 1.75rem 2rem;
+  text-align: center;
+  border-top: 4px solid #6BDB2B;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.nm-card .logo {
+  max-width: 50px;
+}
+
+.nm-countdown {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nm-today  { color: #27ae60; font-weight: 700; }
+.nm-soon   { color: #f39c12; font-weight: 700; }
+.nm-days   { color: #555; }
+.nm-days strong { color: #0F3D1E; font-size: 1.1em; }
+
+.nm-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f0f2f5;
+  border: 1px solid #dde0e6;
+  border-radius: 20px;
+  padding: 0.25rem 0.85rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.nm-time {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #fff;
+  background: #0F3D1E;
+  border-radius: 20px;
+  padding: 0.1rem 0.55rem;
+  letter-spacing: 0.03em;
+}
+
+.nm-venue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #f0f8e8;
+  border: 1px solid #c8eea0;
+  border-radius: 20px;
+  padding: 0.25rem 0.85rem;
+  margin-bottom: 1.4rem;
+  font-size: 0.88rem;
+  color: #2E7D32;
+  font-weight: 500;
+}
+
+a.nm-venue {
+  text-decoration: none;
+  color: #2E7D32;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+}
+
+a.nm-venue:hover {
+  background: #dff5c8;
+  color: #1a5c1f;
+}
+
+.nm-matchup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.nm-team {
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  flex: 1;
+  max-width: 220px;
+  display: flex;
+}
+
+.nm-team--home.team-badge--amigos,
+.nm-team--away.team-badge--amigos {
+  background-color: #C8102E;
+  color: #fff;
+}
+
+.nm-team--home.team-badge--tunel,
+.nm-team--away.team-badge--tunel {
+  background-color: #0B3C5D;
+  color: #fff;
+}
+
+.nm-team-name {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.nm-vs {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #999;
+  flex-shrink: 0;
 }
 
 /* Tables */
