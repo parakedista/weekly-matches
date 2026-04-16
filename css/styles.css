@@ -122,6 +122,93 @@ tbody tr:hover {
   font-size: 1.1rem;
 }
 
+/* Expandable match history rows */
+.match-row {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.match-row:hover {
+  background: #dff5c8 !important;
+}
+
+.match-row--open {
+  background: #eafbd7 !important;
+}
+
+.expand-toggle {
+  width: 2rem;
+  text-align: center;
+  color: #999;
+}
+
+.chevron {
+  display: inline-block;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.match-row--open .chevron {
+  transform: rotate(180deg);
+}
+
+.match-detail td {
+  padding: 0;
+  background: #f7fdf2;
+  border-top: none;
+}
+
+.match-detail-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px dashed #c8eea0;
+}
+
+.match-detail-team-header {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  font-size: 0.8rem;
+}
+
+.match-detail-team-header.team-badge {
+  margin-bottom: 0.5rem;
+}
+
+.player-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.player-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+}
+
+.player-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.player-dot--amigos { background-color: #C8102E; }
+.player-dot--tunel  { background-color: #0B3C5D; }
+
 /* Form badges */
 .form-cell {
   white-space: nowrap;

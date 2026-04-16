@@ -98,18 +98,58 @@ function renderMatchHistory(matches) {
   const tbody = document.querySelector("#history-table tbody");
   tbody.innerHTML = "";
 
-  [...matches].reverse().forEach((m) => {
+  [...matches].reverse().forEach((m, i) => {
     const d = new Date(m.date);
     const dateStr = d.toLocaleDateString("pt-PT", {
       year: "numeric", month: "short", day: "numeric",
     });
+
+    // Main match row
     const tr = document.createElement("tr");
+    tr.className = "match-row";
+    tr.setAttribute("aria-expanded", "false");
     tr.innerHTML = `
       <td>${dateStr}</td>
       <td>${m.homeTeam}</td>
       <td class="score-cell">${m.homeGoals} – ${m.awayGoals}</td>
-      <td>${m.awayTeam}</td>`;
+      <td>${m.awayTeam}</td>
+      <td class="expand-toggle"><span class="chevron">▾</span></td>`;
+
+    // Detail row
+    const detail = document.createElement("tr");
+    detail.className = "match-detail";
+    detail.hidden = true;
+
+    const homePlayers = (m.homePlayers || []).map(
+      (p) => `<li><span class="player-dot player-dot--${m.home}"></span>${p}</li>`
+    ).join("");
+    const awayPlayers = (m.awayPlayers || []).map(
+      (p) => `<li><span class="player-dot player-dot--${m.away}"></span>${p}</li>`
+    ).join("");
+
+    detail.innerHTML = `
+      <td colspan="5">
+        <div class="match-detail-inner">
+          <div class="match-detail-team">
+            <div class="match-detail-team-header team-badge team-badge--${m.home}">${m.homeTeam}</div>
+            <ul class="player-list">${homePlayers || "<li>—</li>"}</ul>
+          </div>
+          <div class="match-detail-team">
+            <div class="match-detail-team-header team-badge team-badge--${m.away}">${m.awayTeam}</div>
+            <ul class="player-list">${awayPlayers || "<li>—</li>"}</ul>
+          </div>
+        </div>
+      </td>`;
+
+    tr.addEventListener("click", () => {
+      const expanded = tr.getAttribute("aria-expanded") === "true";
+      tr.setAttribute("aria-expanded", String(!expanded));
+      tr.classList.toggle("match-row--open", !expanded);
+      detail.hidden = expanded;
+    });
+
     tbody.appendChild(tr);
+    tbody.appendChild(detail);
   });
 }
 
