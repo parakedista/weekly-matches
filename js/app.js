@@ -2,6 +2,38 @@ const TEAM_COLORS = {
   amigos: { bg: "rgba(200,16,46,0.7)",  border: "#C8102E" },
   tunel:  { bg: "rgba(11,60,93,0.7)",   border: "#0B3C5D" },
 };
+const COLUMN_TOOLTIPS = {
+  "J":         { title: "Jogos disputados",              desc: null },
+  "Pts":       { title: "Pontos",             desc: null },
+  "V":         { title: "Vitórias",           desc: null },
+  "E":         { title: "Empates",            desc: null },
+  "D":         { title: "Derrotas",           desc: null },
+  "GM":        { title: "Golos Marcados",     desc: "Número de golos que esta equipa marcou." },
+  "GS":        { title: "Golos Sofridos",     desc: "Número de golos que esta equipa sofreu." },
+  "DG":        { title: "Diferença de Golos", desc: "Golos Marcados - Golos Sofridos." },
+  "Últimos 5": { title: "Últimos 5 Jogos",    desc: null },
+  "PPJ":       { title: "Pontos por Jogo",    desc: "Média de pontos ganhos por jogo ao longo da competição.<br/>Os números mais altos indicam a equipa mais forte.<br/>Max. <div class='form-badge--v' style='display: inline; padding: 0.1rem 0.2rem; border-radius: 4px;'>3.00</div> Pontos" },
+  "MGJ":       { title: "Média de Golos por Jogo",     desc: "Média total de golos por jogo.<br/>Calculada ao longo da época." },
+};
+
+function applyTooltips(thead) {
+  thead.querySelectorAll("th").forEach((th) => {
+    const tip = COLUMN_TOOLTIPS[th.textContent.trim()];
+    if (tip) {
+      th.style.cursor = "pointer";
+      const span = document.createElement("span");
+      span.className = "th-tooltip";
+      span.innerHTML = `<span class="th-tooltip__title">${tip.title}</span>${tip.desc ? `<span class="th-tooltip__desc">${tip.desc}</span>` : ""}`;
+      th.appendChild(span);
+
+      th.addEventListener("mousemove", (e) => {
+        span.style.left = `${e.clientX + 12}px`;
+        span.style.top  = `${e.clientY - 28}px`;
+      });
+    }
+  });
+}
+
 const MONTH_NAMES = [
   "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro",
@@ -10,7 +42,7 @@ const MONTH_NAMES = [
 /* ---------- helpers ---------- */
 
 function computeTeamStats(matches, teamName) {
-  let wins = 0, draws = 0, defeats = 0, scored = 0, allowed = 0;
+  let wins = 0, draws = 0, defeats = 0, scored = 0, allowed = 0, points = 0;
 
   matches.forEach((m) => {
     const isHome = m.homeTeam === teamName;
@@ -18,13 +50,19 @@ function computeTeamStats(matches, teamName) {
     const ga = isHome ? m.awayGoals : m.homeGoals;
     scored += gf;
     allowed += ga;
-    if (gf > ga) wins++;
-    else if (gf === ga) draws++;
+    if (gf > ga) {
+      wins++;
+      points += 3;
+    } else if (gf === ga) {
+      draws++;
+      points += 1;
+    }
     else defeats++;
   });
 
   return {
     played: matches.length,
+    points,
     wins,
     draws,
     defeats,
@@ -122,20 +160,28 @@ function renderOverallTable(matches, teams) {
   const tbody = document.querySelector("#stats-table tbody");
   tbody.innerHTML = "";
 
-  teams.forEach((team) => {
-    const s = computeTeamStats(matches, team.name);
+  applyTooltips(document.querySelector("#stats-table thead"));
+
+  const sortedTeams = [...teams]
+    .map((team) => ({ team, s: computeTeamStats(matches, team.name) }))
+    .sort((a, b) => b.s.points - a.s.points || b.s.scored - a.s.scored);
+
+  sortedTeams.forEach(({ team, s }) => {
     const form = getLastFiveResults(matches, team.name);
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td style="text-align:left;font-weight:600">${team.name}</td>
       <td>${s.played}</td>
+      <td>${s.points}</td>
       <td>${s.wins}</td>
       <td>${s.draws}</td>
       <td>${s.defeats}</td>
       <td>${s.scored}</td>
       <td>${s.allowed}</td>
       <td>${s.diff > 0 ? "+" : ""}${s.diff}</td>
-      <td class="form-cell">${renderFormBadges(form)}</td>`;
+      <td class="form-cell">${renderFormBadges(form)}</td>
+      <td>${(s.points/s.played).toFixed(2)}</td>
+      <td>${(s.scored/s.played).toFixed(2)}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -264,7 +310,9 @@ function renderMonthlySection(matches, teams) {
   sortedKeys.forEach((key) => {
     const wrapper = document.createElement("div");
     wrapper.className = "monthly-table-wrapper";
-    const stats = teams.map((t) => ({ team: t.name, ...computeTeamStats(months[key], t.name) }));
+    const stats = teams
+      .map((t) => ({ team: t.name, ...computeTeamStats(months[key], t.name) }))
+      .sort((a, b) => b.points - a.points || b.scored - a.scored);
 
     wrapper.innerHTML = `
       <h3>${monthLabel(key)}</h3>
@@ -272,8 +320,8 @@ function renderMonthlySection(matches, teams) {
         <table>
           <thead>
             <tr>
-              <th>Equipa</th><th>J</th><th>V</th><th>E</th><th>D</th>
-              <th>GM</th><th>GS</th><th>DG</th>
+              <th>Equipa</th><th>J</th><th>Pts</th><th>V</th><th>E</th><th>D</th>
+              <th>GM</th><th>GS</th><th>DG</th><th>PPJ</th><th>MGJ</th>
             </tr>
           </thead>
           <tbody>
@@ -281,9 +329,16 @@ function renderMonthlySection(matches, teams) {
               .map(
                 (s) => `<tr>
                   <td style="text-align:left;font-weight:600">${s.team}</td>
-                  <td>${s.played}</td><td>${s.wins}</td><td>${s.draws}</td>
-                  <td>${s.defeats}</td><td>${s.scored}</td><td>${s.allowed}</td>
+                  <td>${s.played}</td>
+                  <td>${s.points}</td>
+                  <td>${s.wins}</td>
+                  <td>${s.draws}</td>
+                  <td>${s.defeats}</td>
+                  <td>${s.scored}</td>
+                  <td>${s.allowed}</td>
                   <td>${s.diff > 0 ? "+" : ""}${s.diff}</td>
+                  <td>${(s.points / s.played).toFixed(2)}</td>
+                  <td>${(s.scored / s.played).toFixed(2)}</td>                  
                 </tr>`
               )
               .join("")}
@@ -291,6 +346,7 @@ function renderMonthlySection(matches, teams) {
         </table>
       </div>`;
     tablesContainer.appendChild(wrapper);
+    applyTooltips(wrapper.querySelector("thead"));
   });
 
   // Monthly trend charts per team, split by result trends and goal trends
@@ -384,6 +440,9 @@ function renderRankings(matches) {
   const bestMatch  = matchTotals.reduce((a, b) => (b.total > a.total ? b : a));
   const worstMatch = matchTotals.reduce((a, b) => (b.total < a.total ? b : a));
 
+  const totalGoals = matches.reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0);
+  const avgGoals   = (totalGoals / matches.length).toFixed(1);
+
   const cards = [
     {
       icon: "🏆",
@@ -412,6 +471,13 @@ function renderRankings(matches) {
       highlight: worstMatch.label,
       detail: `${worstMatch.total} golos · ${worstMatch.date}`,
       mod: "worst",
+    },
+    {
+      icon: "📊",
+      title: "Média de golos por jogo",
+      highlight: avgGoals,
+      detail: `${totalGoals} golos em ${matches.length} jogos`,
+      mod: "avg",
     },
   ];
 

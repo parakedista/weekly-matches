@@ -1,3 +1,4 @@
+
 *,
 *::before,
 *::after {
@@ -65,7 +66,7 @@ h2 {
 }
 
 .nm-card .logo {
-  max-width: 50px;
+  max-width: 125px;
 }
 
 .nm-countdown {
@@ -180,9 +181,11 @@ table {
   border-collapse: collapse;
   background: #fff;
   border-radius: 8px;
-  overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
+thead tr th:first-child { border-radius: 8px 0 0 0; }
+thead tr th:last-child  { border-radius: 0 8px 0 0; }
 
 thead {
   background: #0F3D1E;
@@ -425,6 +428,13 @@ tbody tr:hover {
   gap: 1.25rem;
 }
 
+#rankings-grid .ranking-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+
 .ranking-card {
   background: #fff;
   border-radius: 10px;
@@ -444,6 +454,11 @@ tbody tr:hover {
 .ranking-card--worst {
   border-top-color: #e74c3c;
 }
+
+.ranking-card--avg {
+  border-top-color: #0B3C5D;
+}
+
 
 .ranking-icon {
   font-size: 2rem;
@@ -468,6 +483,7 @@ tbody tr:hover {
   font-size: 0.9rem;
   color: #555;
 }
+
 
 /* Footer */
 footer {
@@ -502,3 +518,41 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- table header tooltips ---------- */
+.th-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  background: #1a1a2e;
+  color: #fff;
+  white-space: nowrap;
+  padding: 8px 12px;
+  border-radius: 6px;
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 140px;
+}
+
+th:hover .th-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.th-tooltip__title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #6BDB2B;
+  letter-spacing: 0.03em;
+}
+
+.th-tooltip__desc {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #ccc;
+}
+
