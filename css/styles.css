@@ -542,6 +542,11 @@ footer {
   .rankings-grid {
     grid-template-columns: 1fr;
   }
+
+  .nm-card {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
 }
 
 /* ---------- table header tooltips ---------- */
