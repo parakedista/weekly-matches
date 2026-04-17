@@ -23,7 +23,7 @@
   </header>
 
   <main>
-    <!-- Next Match -->
+    <!-- Next Match – always visible -->
     <section id="next-match">
       <h2>Próximo Jogo</h2>
       <div id="next-match-card">
@@ -55,103 +55,115 @@
       </div>
     </section>
 
-    <!-- Overall Stats Table -->
-    <section id="overall-stats">
-      <h2>Estatísticas Gerais</h2>
-      <div class="table-container">
-        <table id="stats-table">
-          <thead>
-            <tr>
-              <th>Equipa</th>
-              <th>J</th>
-              <th>Pts</th>
-              <th>V</th>
-              <th>E</th>
-              <th>D</th>
-              <th>GM</th>
-              <th>GS</th>
-              <th>DG</th>
-              <th>Últimos 5</th>
-              <th>PPJ</th>
-              <th>MGJ</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+    <!-- Tab navigation -->
+    <nav class="tabs" aria-label="Secções">
+      <button class="tab-btn tab-btn--active" data-tab="tab-stats">📊 Estatísticas</button>
+      <button class="tab-btn" data-tab="tab-charts">📈 Gráficos</button>
+      <button class="tab-btn" data-tab="tab-monthly">🗓️ Mensal</button>
+      <button class="tab-btn" data-tab="tab-players">👤 Jogadores</button>
+      <button class="tab-btn" data-tab="tab-results">📋 Resultados</button>
+    </nav>
 
-    <!-- Rankings -->
-    <section id="rankings">
-      <h2>Rankings</h2>
-      <div class="rankings-grid" id="rankings-grid"></div>
-    </section>
-
-    <!-- Overall Charts -->
-    <section id="overall-charts">
-      <h2>Gráficos Gerais</h2>
-      <div class="charts-grid">
-        <div class="chart-card">
-          <h3>Vitórias / Empates</h3>
-          <canvas id="results-chart"></canvas>
+    <!-- Tab: Estatísticas -->
+    <div class="tab-panel" id="tab-stats">
+      <section id="overall-stats">
+        <h2>Estatísticas Gerais</h2>
+        <div class="table-container">
+          <table id="stats-table">
+            <thead>
+              <tr>
+                <th>Equipa</th>
+                <th>J</th><th>Pts</th><th>V</th><th>E</th><th>D</th>
+                <th>GM</th><th>GS</th><th>DG</th>
+                <th>Últimos 5</th><th>PPJ</th><th>MGJ</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
-        <div class="chart-card">
-          <h3>Golos</h3>
-          <canvas id="goals-chart"></canvas>
+      </section>
+      <section id="rankings">
+        <h2>Rankings</h2>
+        <div class="rankings-grid" id="rankings-grid"></div>
+      </section>
+    </div>
+
+    <!-- Tab: Gráficos -->
+    <div class="tab-panel" id="tab-charts" hidden>
+      <section id="overall-charts">
+        <h2>Gráficos Gerais</h2>
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3>Vitórias / Empates</h3>
+            <canvas id="results-chart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Golos</h3>
+            <canvas id="goals-chart"></canvas>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <section id="monthly-charts-section">
+        <h2>Gráficos Mensais</h2>
+        <div class="charts-grid" id="monthly-charts"></div>
+      </section>
+    </div>
 
-    <!-- Monthly Stats -->
-    <section id="monthly-stats">
-      <h2>Estatísticas Mensais</h2>
-      <div id="monthly-tables"></div>
-      <div class="charts-grid" id="monthly-charts"></div>
-    </section>
+    <!-- Tab: Mensal -->
+    <div class="tab-panel" id="tab-monthly" hidden>
+      <section id="monthly-stats">
+        <h2>Estatísticas Mensais</h2>
+        <div id="monthly-tables"></div>
+      </section>
+    </div>
 
-    <!-- Player Stats -->
-    <section id="player-stats">
-      <h2>Jogadores</h2>
-      <div class="table-container">
-        <table id="players-table">
-          <thead>
-            <tr>
-              <th>Jogador</th>
-              <th>Jogos</th>
-              <th>Equipa(s)</th>
-              <th>Vitórias</th>
-              <th>Empates</th>
-              <th>Derrotas</th>
-              <th>% Vitórias</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-        <div class="players-total-bar">
-          <span class="players-total-label">Total de Jogadores</span>
-          <span class="players-total-count" id="players-total"></span>
+    <!-- Tab: Jogadores -->
+    <div class="tab-panel" id="tab-players" hidden>
+      <section id="player-stats">
+        <h2>Jogadores</h2>
+        <div class="table-container">
+          <table id="players-table">
+            <thead>
+              <tr>
+                <th>Jogador</th>
+                <th>Jogos</th>
+                <th>Equipa(s)</th>
+                <th>Vitórias</th>
+                <th>Empates</th>
+                <th>Derrotas</th>
+                <th>% Vitórias</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div class="players-total-bar">
+            <span class="players-total-label">Total de Jogadores</span>
+            <span class="players-total-count" id="players-total"></span>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
-    <!-- Match History -->
-    <section id="match-history">
-      <h2>Resultados Jogos</h2>
-      <div class="table-container">
-        <table id="history-table">
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Equipa da Casa</th>
-              <th>Resultado</th>
-              <th>Equipa Visitante</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </section>
+    <!-- Tab: Resultados -->
+    <div class="tab-panel" id="tab-results" hidden>
+      <section id="match-history">
+        <h2>Resultados Jogos</h2>
+        <div class="table-container">
+          <table id="history-table">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Equipa da Casa</th>
+                <th>Resultado</th>
+                <th>Equipa Visitante</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer>

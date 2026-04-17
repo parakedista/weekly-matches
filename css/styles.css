@@ -1,4 +1,3 @@
-
 *,
 *::before,
 *::after {
@@ -494,20 +493,46 @@ footer {
   border-top: 1px solid #ddd;
 }
 
+/* ---------- tabs ---------- */
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #dde0e6;
+  padding-bottom: 0;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  border-radius: 6px 6px 0 0;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.tab-btn:hover {
+  color: #0F3D1E;
+  background: #f0f8e8;
+}
+
+.tab-btn--active {
+  color: #0F3D1E;
+  border-bottom-color: #6BDB2B;
+  background: #f0f8e8;
+}
+
 /* Responsive */
 @media (max-width: 600px) {
-  header h1 {
-    font-size: 1.4rem;
-  }
-
-  header .subtitle {
-    font-size: 0.95rem;
-  }
-
-  th,
-  td {
-    padding: 0.5rem 0.6rem;
-    font-size: 0.85rem;
+  .tab-btn {
+    padding: 0.5rem 0.7rem;
+    font-size: 0.8rem;
   }
 
   .charts-grid {
@@ -555,4 +580,3 @@ th:hover .th-tooltip {
   font-weight: 400;
   color: #ccc;
 }
-

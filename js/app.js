@@ -422,13 +422,23 @@ function renderRankings(matches) {
   // --- Month rankings ---
   const months = groupByMonth(matches);
   const monthTotals = Object.entries(months).map(([key, ms]) => ({
+    key,
     label: monthLabel(key),
     goals: ms.reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0),
     games: ms.length,
   }));
 
   const bestMonth  = monthTotals.reduce((a, b) => (b.goals > a.goals ? b : a));
-  const worstMonth = monthTotals.reduce((a, b) => (b.goals < a.goals ? b : a));
+
+  // Exclude current month from worst-month ranking (still in progress),
+  // unless it's the only month available.
+  const currentMonthKey = (() => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  })();
+  const monthTotalsForWorst = monthTotals.filter((m) => m.key !== currentMonthKey);
+  const worstMonthSource = monthTotalsForWorst.length > 0 ? monthTotalsForWorst : monthTotals;
+  const worstMonth = worstMonthSource.reduce((a, b) => (b.goals < a.goals ? b : a));
 
   // --- Match rankings ---
   const matchTotals = matches.map((m) => ({
@@ -439,6 +449,18 @@ function renderRankings(matches) {
 
   const bestMatch  = matchTotals.reduce((a, b) => (b.total > a.total ? b : a));
   const worstMatch = matchTotals.reduce((a, b) => (b.total < a.total ? b : a));
+
+  // --- Biggest victory ---
+  const victories = matches
+    .map((m) => ({
+      diff: Math.abs(m.homeGoals - m.awayGoals),
+      winner: m.homeGoals > m.awayGoals ? m.homeTeam : m.awayTeam,
+      label: `${m.homeTeam} ${m.homeGoals}–${m.awayGoals} ${m.awayTeam}`,
+      date: new Date(m.date).toLocaleDateString("pt-PT", { year: "numeric", month: "short", day: "numeric" }),
+    }))
+    .filter((m) => m.diff > 0); // exclude draws
+
+  const biggestVictory = victories.reduce((a, b) => (b.diff > a.diff ? b : a));
 
   const totalGoals = matches.reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0);
   const avgGoals   = (totalGoals / matches.length).toFixed(1);
@@ -471,6 +493,13 @@ function renderRankings(matches) {
       highlight: worstMatch.label,
       detail: `${worstMatch.total} golos · ${worstMatch.date}`,
       mod: "worst",
+    },
+    {
+      icon: "🥇",
+      title: "Maior Vitória",
+      highlight: biggestVictory.label,
+      detail: `${biggestVictory.winner} ganhou por ${biggestVictory.diff} · ${biggestVictory.date}`,
+      mod: "best",
     },
     {
       icon: "📊",
@@ -556,6 +585,25 @@ function renderPlayersTable(matches, teams) {
 }
 
 
+/* ---------- tabs ---------- */
+
+function initTabs() {
+  const buttons = document.querySelectorAll(".tab-btn");
+  const panels  = document.querySelectorAll(".tab-panel");
+
+  function activateTab(tabId) {
+    buttons.forEach((btn) => btn.classList.toggle("tab-btn--active", btn.dataset.tab === tabId));
+    panels.forEach((panel) => { panel.hidden = panel.id !== tabId; });
+    history.replaceState(null, "", `#${tabId}`);
+  }
+
+  buttons.forEach((btn) => btn.addEventListener("click", () => activateTab(btn.dataset.tab)));
+
+  // Restore from URL hash on load
+  const hash = location.hash.slice(1);
+  if (hash && document.getElementById(hash)) activateTab(hash);
+}
+
 async function init() {
   const response = await fetch("data/matches.json");
   const data = await response.json();
@@ -578,6 +626,7 @@ async function init() {
   renderMonthlySection(matches, teams);
   renderRankings(matches);
   renderPlayersTable(matches, teams);
+  initTabs();
 }
 
 document.addEventListener("DOMContentLoaded", init);
