@@ -68,6 +68,11 @@
       "date": "2026-04-13", "home": "amigos", "away": "tunel", "homeGoals": 5,  "awayGoals": 7,
       "homePlayers": ["Avante", "Rui Chiti", "Zé Pinto", "Luis Chiti", "Duarte Lima", "Marcel Toledo", "Pedro Martinho"],
       "awayPlayers":  ["Gonçalo Neto", "Gonçalo Neves", "Diogo Correia", "Pedro Melo", "Anderson Sá", "João Tiago", "Wilson Neto"]
+    },
+    {
+      "date": "2026-04-20", "home": "amigos", "away": "tunel", "homeGoals": 16,  "awayGoals": 9,
+      "homePlayers": ["Avante", "Rui Chiti", "Luis Chiti", "Duarte Lima", "Marcel Toledo", "Gonçalo Massano", "Francisco"],
+      "awayPlayers":  ["Gonçalo Neto", "Figueiredo", "Diogo Correia", "Pedro Melo", "Wilson Neto", "Peres", "Filipe Oliveira"]
     }
   ]
 }
