@@ -576,6 +576,7 @@ function renderPlayersTable(matches, teams) {
       <td style="text-align:left;font-weight:600">${p.name}</td>
       <td>${p.played}</td>
       <td class="team-badges-cell">${teamBadges}</td>
+      <td></td>
       <td>${p.wins}</td>
       <td>${p.draws}</td>
       <td>${p.losses}</td>
@@ -584,6 +585,107 @@ function renderPlayersTable(matches, teams) {
   });
 }
 
+
+/* ---------- season progress ---------- */
+
+function computeSeasonProgress(matches, seasonStart, seasonEnd) {
+  const [sy, sm, sd] = seasonStart.split("-").map(Number);
+  const [ey, em, ed] = seasonEnd.split("-").map(Number);
+  const start = new Date(sy, sm - 1, sd);
+  const end   = new Date(ey, em - 1, ed);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const playedDates = new Set(matches.map((m) => m.date));
+
+  // Today as a YYYY-MM-DD string (local time, no timezone shift)
+  const todayStr = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, "0"),
+    String(today.getDate()).padStart(2, "0"),
+  ].join("-");
+
+  // Enumerate every Monday from start to end (inclusive) using local date arithmetic
+  const allMondays = [];
+  const cur = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  // Advance to the first Monday on or after seasonStart (0=Sun,1=Mon,...,6=Sat)
+  const dayOfWeek = cur.getDay();
+  if (dayOfWeek !== 1) {
+    const daysUntilMonday = (8 - dayOfWeek) % 7 || 7;
+    cur.setDate(cur.getDate() + daysUntilMonday);
+  }
+  const endLocal = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+  while (cur <= endLocal) {
+    const ds = [
+      cur.getFullYear(),
+      String(cur.getMonth() + 1).padStart(2, "0"),
+      String(cur.getDate()).padStart(2, "0"),
+    ].join("-");
+    allMondays.push(ds);
+    cur.setDate(cur.getDate() + 7);
+  }
+
+  const total = allMondays.length;
+  let played = 0, cancelled = 0, remaining = 0;
+
+  allMondays.forEach((d) => {
+    if (playedDates.has(d)) {
+      played++;
+    } else if (d < todayStr) {
+      cancelled++;
+    } else {
+      remaining++;
+    }
+  });
+
+  return { total, played, cancelled, remaining, allMondays, seasonStart, seasonEnd };
+}
+
+function renderSeasonProgress(matches, seasonStart, seasonEnd) {
+  const { total, played, cancelled, remaining } = computeSeasonProgress(matches, seasonStart, seasonEnd);
+
+  const pctPlayed    = (played    / total) * 100;
+  const pctCancelled = (cancelled / total) * 100;
+  const pctRemaining = (remaining / total) * 100;
+
+  document.getElementById("sp-seg-played").style.width    = `${pctPlayed}%`;
+  document.getElementById("sp-seg-cancelled").style.width = `${pctCancelled}%`;
+  document.getElementById("sp-seg-remaining").style.width = `${pctRemaining}%`;
+
+  const fmt = (d) => new Date(d).toLocaleDateString("pt-PT", { day: "numeric", month: "short", year: "numeric" });
+  document.getElementById("sp-label-start").textContent = fmt(seasonStart);
+  document.getElementById("sp-label-end").textContent   = fmt(seasonEnd);
+
+  const statsEl = document.getElementById("sp-stats");
+  const doneTotal = played + cancelled;
+  const overallPct = Math.round((doneTotal / total) * 100);
+
+  const pctPlayedStat    = Math.round((played    / total) * 100);
+  const pctCancelledStat = Math.round((cancelled / total) * 100);
+  const pctRemainingStat = Math.round((remaining / total) * 100);
+
+  statsEl.innerHTML = `
+    <div class="sp-stat sp-stat--played">
+      <span class="sp-stat__value">${played}</span>
+      <span class="sp-stat__label">${pctPlayedStat}% Jogados</span>
+    </div>
+    <div class="sp-stat sp-stat--cancelled">
+      <span class="sp-stat__value">${cancelled}</span>
+      <span class="sp-stat__label">${pctCancelledStat}% Cancelados</span>
+    </div>
+    <div class="sp-stat sp-stat--remaining">
+      <span class="sp-stat__value">${remaining}</span>
+      <span class="sp-stat__label">${pctRemainingStat}% Por Jogar</span>
+    </div>
+    <div class="sp-stat sp-stat--total">
+      <span class="sp-stat__value">${total}</span>
+      <span class="sp-stat__label">Total Segundas</span>
+    </div>
+    <div class="sp-stat sp-stat--pct">
+      <span class="sp-stat__value">${overallPct}%</span>
+      <span class="sp-stat__label">Época Decorrida</span>
+    </div>`;
+}
 
 /* ---------- tabs ---------- */
 
@@ -620,6 +722,7 @@ async function init() {
   }));
 
   renderNextMatch(matches, teams);
+  renderSeasonProgress(matches, data.seasonStart, data.seasonEnd);
   renderOverallTable(matches, teams);
   renderMatchHistory(matches);
   renderOverallCharts(matches, teams);

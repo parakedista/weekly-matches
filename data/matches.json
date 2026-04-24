@@ -1,4 +1,6 @@
 {
+  "seasonStart": "2026-01-01",
+  "seasonEnd": "2026-12-31",
   "teams": [
     { "id": "amigos", "name": "SL Amigos do Chiti" },
     { "id": "tunel",  "name": "Túnel do Grilo FC"  }

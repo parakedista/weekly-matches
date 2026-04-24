@@ -23,37 +23,56 @@
   </header>
 
   <main>
-    <!-- Next Match – always visible -->
-    <section id="next-match">
-      <h2>Próximo Jogo</h2>
-      <div id="next-match-card">
-        <div class="nm-card">
-          <div class="nm-countdown" id="nm-countdown"></div>
-          <div>
-            <div class="nm-date">
-              <span id="nm-date"></span>
-              <span class="nm-time"> ⏱ 22h30</span>
+    <!-- Next Match + Season Progress side by side -->
+    <div class="top-row">
+
+      <!-- Next Match -->
+      <section id="next-match">
+        <h2>Próximo Jogo</h2>
+        <div id="next-match-card">
+          <div class="nm-card">
+            <div class="nm-countdown" id="nm-countdown"></div>
+            <div>
+              <div class="nm-date">
+                <span id="nm-date"></span>
+                <span class="nm-time"> ⏱ 22h30</span>
+              </div>
+            </div>
+            <a class="nm-venue" href="https://maps.app.goo.gl/p2AaRHCqXUnkKDm67" target="_blank" rel="noopener noreferrer">
+              🏟️ Colégio Planalto
+            </a>
+            <div class="nm-matchup">
+              <img src="img/amigos.png" alt="SL Amigos do Chiti Logo" class="logo">
+              <div class="nm-vs">VS</div>
+              <img src="img/tunel.png" alt="Túnel do Grilo FC Logo" class="logo">
             </div>
           </div>
-          <a class="nm-venue" href="https://maps.app.goo.gl/p2AaRHCqXUnkKDm67" target="_blank" rel="noopener noreferrer">
-            🏟️ Colégio Planalto
-          </a>
-          <div class="nm-matchup">
-            <!--<div class="nm-team nm-team&#45;&#45;home team-badge&#45;&#45;amigos">
-              <img src="img/amigos.png" alt="SL Amigos do Chiti Logo" class="logo">
-              <span class="nm-team-name">SL Amigos do Chiti</span>
-            </div>-->
-            <img src="img/amigos.png" alt="SL Amigos do Chiti Logo" class="logo">
-            <div class="nm-vs">VS</div>
-            <img src="img/tunel.png" alt="Túnel do Grilo FC Logo" class="logo">
-            <!--<div class="nm-team nm-team&#45;&#45;away team-badge&#45;&#45;tunel">
-              <img src="img/tunel.png" alt="Túnel do Grilo FC Logo" class="logo">
-              <span class="nm-team-name">Túnel do Grilo FC</span>
-            </div>-->
+        </div>
+      </section>
+
+      <!-- Season Progress -->
+      <section id="season-progress">
+        <h2>Progresso da Época</h2>
+        <div id="season-progress-bar-wrap">
+          <div class="sp-bar-legend">
+            <span><span class="sp-bar-legend__dot" style="background:#2ecc71"></span>Jogados</span>
+            <span><span class="sp-bar-legend__dot" style="background:#e74c3c"></span>Cancelados</span>
+            <span><span class="sp-bar-legend__dot" style="background:rgba(255,255,255,0.55)"></span>Por Jogar</span>
+          </div>
+          <div class="sp-bar" id="sp-bar">
+            <div class="sp-bar__segment sp-bar__segment--played"  id="sp-seg-played"></div>
+            <div class="sp-bar__segment sp-bar__segment--cancelled" id="sp-seg-cancelled"></div>
+            <div class="sp-bar__segment sp-bar__segment--remaining" id="sp-seg-remaining"></div>
+          </div>
+          <div class="sp-labels">
+            <span class="sp-label sp-label--start" id="sp-label-start"></span>
+            <span class="sp-label sp-label--end"   id="sp-label-end"></span>
           </div>
         </div>
-      </div>
-    </section>
+        <div class="sp-stats" id="sp-stats"></div>
+      </section>
+
+    </div><!-- /.top-row -->
 
     <!-- Tab navigation -->
     <nav class="tabs" aria-label="Secções">
@@ -128,6 +147,7 @@
                 <th>Jogador</th>
                 <th>Jogos</th>
                 <th>Equipa(s)</th>
+                <th>MOTM</th>
                 <th>Vitórias</th>
                 <th>Empates</th>
                 <th>Derrotas</th>

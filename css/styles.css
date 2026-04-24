@@ -52,7 +52,7 @@ h2 {
   padding-bottom: 0.25rem;
 }
 
-/* Next match card */
+/* Next match card – standalone defaults (overridden when inside #next-match) */
 .nm-card {
   background: #fff;
   border-radius: 12px;
@@ -60,12 +60,10 @@ h2 {
   padding: 1.75rem 2rem;
   text-align: center;
   border-top: 4px solid #6BDB2B;
-  max-width: 600px;
-  margin: 0 auto;
 }
 
 .nm-card .logo {
-  max-width: 125px;
+  max-width: 90px;
 }
 
 .nm-countdown {
@@ -81,7 +79,8 @@ h2 {
 .nm-days strong { color: #0F3D1E; font-size: 1.1em; }
 
 .nm-date {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 0.5rem;
   background: #f0f2f5;
@@ -528,60 +527,319 @@ footer {
   background: #f0f8e8;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .tab-btn {
-    padding: 0.5rem 0.7rem;
-    font-size: 0.8rem;
-  }
-
-  .charts-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .rankings-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .nm-card {
-    padding-right: 1rem;
-    padding-left: 1rem;
-  }
+/* ---------- Top row: next match + season progress ---------- */
+.top-row {
+  display: flex;
+  gap: 1.5rem;
+  align-items: stretch;
+  margin-bottom: 2.5rem;
 }
 
-/* ---------- table header tooltips ---------- */
-.th-tooltip {
-  visibility: hidden;
-  opacity: 0;
-  background: #1a1a2e;
+.top-row > section {
+  margin-bottom: 0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+  overflow: hidden;
+}
+
+/* ── Next Match ── */
+#next-match {
+  flex: 0 0 320px;
+  background: linear-gradient(145deg, #0A2010 0%, #0F3D1E 55%, #1a6b3a 100%);
   color: #fff;
-  white-space: nowrap;
-  padding: 8px 12px;
-  border-radius: 6px;
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
-  transition: opacity 0.15s ease;
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  min-width: 140px;
+  padding: 0;
 }
 
-th:hover .th-tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-.th-tooltip__title {
-  font-size: 0.8rem;
-  font-weight: 700;
+#next-match h2 {
   color: #6BDB2B;
+  border-bottom-color: #6BDB2B;
+  margin: 1.5rem 1.5rem 0;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+  display: block;
+}
+
+#next-match-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* flatten inner card chrome — section is the card now */
+#next-match .nm-card {
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  border-top: none;
+  padding: 1rem 1.5rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: none;
+  margin: 0;
+  gap: 0.75rem;
+}
+
+#next-match .nm-countdown {
+  color: #a8f070;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0;
+}
+
+#next-match .nm-today  { color: #6BDB2B; }
+#next-match .nm-soon   { color: #f9ca56; }
+#next-match .nm-days   { color: #a8f070; }
+#next-match .nm-days strong { color: #fff; font-size: 1.2em; }
+
+#next-match .nm-date {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #e0ffe0;
+  margin-bottom: 0;
+}
+
+#next-match .nm-time {
+  background: #6BDB2B;
+  color: #0A2010;
+}
+
+#next-match .nm-venue {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #a8f070;
+  margin-bottom: 0;
+}
+
+#next-match a.nm-venue:hover {
+  background: rgba(107,219,43,0.18);
+  color: #6BDB2B;
+}
+
+#next-match .nm-matchup {
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+#next-match .nm-card .logo {
+  max-width: 90px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));
+}
+
+#next-match .nm-vs {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 0.05em;
+}
+
+/* ── Season Progress ── */
+#season-progress {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(160deg, #0d1b2a 0%, #1b3a5c 100%);
+  padding: 1.75rem 1.75rem 1.5rem;
+  color: #fff;
+}
+
+#season-progress h2 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #63b3ed;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 1.25rem;
+  display: block;
+}
+
+#season-progress-bar-wrap {
+  flex: 0 0 auto;
+}
+
+/* --- legend --- */
+.sp-bar-legend {
+  display: flex;
+  font-size: 0.75rem;
+  font-weight: 600;
+  gap: 1rem;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 0.75rem;
+}
+
+.sp-bar-legend__dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* --- bar --- */
+.sp-bar {
+  display: flex;
+  height: 22px;
+  border-radius: 11px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.08);
+  margin-bottom: 0.4rem;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.sp-bar__segment {
+  height: 100%;
+  transition: width 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.sp-bar__segment--played {
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+}
+
+.sp-bar__segment--cancelled {
+  background: linear-gradient(90deg, #c0392b, #e74c3c);
+  opacity: 0.85;
+}
+
+.sp-bar__segment--remaining {
+  background: rgba(255,255,255,0.35);
+  border-left: 1px solid rgba(255,255,255,0.15);
+}
+
+/* --- date labels --- */
+.sp-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.sp-label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.7);
   letter-spacing: 0.03em;
 }
 
-.th-tooltip__desc {
-  font-size: 0.75rem;
+/* --- stat chips --- */
+.sp-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: auto;
+}
+
+.sp-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.65rem 0.9rem;
+  border-radius: 10px;
+  min-width: 80px;
+  flex: 1 1 80px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-left-width: 3px;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s;
+}
+
+.sp-stat:hover {
+  background: rgba(255,255,255,0.11);
+}
+
+.sp-stat__value {
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+}
+
+.sp-stat__pct {
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.75;
+  line-height: 1;
+  margin-top: 0.15rem;
+  color: #fff;
+}
+
+.sp-stat__label {
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-top: 0.35rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+}
+
+.sp-stat--played   { border-left-color: #2ecc71; }
+.sp-stat--cancelled{ border-left-color: #e74c3c; }
+.sp-stat--remaining{ border-left-color: #94a3b8; }
+.sp-stat--total    { border-left-color: #63b3ed; }
+.sp-stat--pct      { border-left-color: #f6c90e; }
+
+.sp-stat--played   .sp-stat__value { color: #6ee7a0; }
+.sp-stat--cancelled .sp-stat__value { color: #fc8181; }
+.sp-stat--remaining .sp-stat__value { color: #cbd5e1; }
+.sp-stat--total    .sp-stat__value { color: #90cdf4; }
+.sp-stat--pct      .sp-stat__value { color: #fde68a; }
+
+@media (max-width: 720px) {
+  .top-row {
+    flex-direction: column;
+  }
+  #next-match {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* ---------- Column header tooltips ---------- */
+th {
+  position: relative;
+}
+
+.th-tooltip {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  background: #1a1a2e;
+  color: #fff;
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
   font-weight: 400;
-  color: #ccc;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  max-width: 260px;
+  white-space: normal;
+  line-height: 1.4;
+}
+
+.th-tooltip__title {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+}
+
+.th-tooltip__desc {
+  display: block;
+  opacity: 0.85;
+  font-size: 0.74rem;
+}
+
+th:hover .th-tooltip {
+  display: block;
 }
