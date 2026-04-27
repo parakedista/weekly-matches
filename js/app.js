@@ -462,6 +462,28 @@ function renderRankings(matches) {
 
   const biggestVictory = victories.reduce((a, b) => (b.diff > a.diff ? b : a));
 
+  // --- Best win streak per team ---
+  const teamNames = [...new Set(matches.flatMap((m) => [m.homeTeam, m.awayTeam]))];
+  const bestStreak = teamNames.map((name) => {
+    let maxStreak = 0, cur = 0, startIdx = 0, bestStart = 0, bestEnd = 0;
+    matches.forEach((m, i) => {
+      const isHome = m.homeTeam === name;
+      if (m.homeTeam !== name && m.awayTeam !== name) return;
+      const gf = isHome ? m.homeGoals : m.awayGoals;
+      const ga = isHome ? m.awayGoals : m.homeGoals;
+      if (gf > ga) {
+        if (cur === 0) startIdx = i;
+        cur++;
+        if (cur > maxStreak) { maxStreak = cur; bestStart = startIdx; bestEnd = i; }
+      } else {
+        cur = 0;
+      }
+    });
+    return { name, streak: maxStreak, from: matches[bestStart], to: matches[bestEnd] };
+  });
+  const topStreak = bestStreak.reduce((a, b) => (b.streak > a.streak ? b : a));
+  const streakDateFmt = (m) => new Date(m.date).toLocaleDateString("pt-PT", { day: "numeric", month: "short", year: "numeric" });
+
   const totalGoals = matches.reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0);
   const avgGoals   = (totalGoals / matches.length).toFixed(1);
 
@@ -499,6 +521,15 @@ function renderRankings(matches) {
       title: "Maior Vitória",
       highlight: biggestVictory.label,
       detail: `${biggestVictory.winner} ganhou por ${biggestVictory.diff} · ${biggestVictory.date}`,
+      mod: "best",
+    },
+    {
+      icon: "🔥",
+      title: "Melhor sequência de vitórias",
+      highlight: `${topStreak.name} — ${topStreak.streak} seguidas`,
+      detail: topStreak.streak > 0
+        ? `De ${streakDateFmt(topStreak.from)} a ${streakDateFmt(topStreak.to)}`
+        : "Sem sequência ainda",
       mod: "best",
     },
     {
