@@ -213,11 +213,15 @@ function renderMatchHistory(matches) {
     detail.hidden = true;
 
     const homePlayers = (m.homePlayers || []).map(
-      (p) => `<li><span class="player-dot player-dot--${m.home}"></span>${p}</li>`
+      (p) => `<li><span class="player-dot player-dot--${m.home}"></span>${p}${m.motm === p ? ' <span class="motm-badge" title="Man of the Match">⭐ MOTM</span>' : ""}</li>`
     ).join("");
     const awayPlayers = (m.awayPlayers || []).map(
-      (p) => `<li><span class="player-dot player-dot--${m.away}"></span>${p}</li>`
+      (p) => `<li><span class="player-dot player-dot--${m.away}"></span>${p}${m.motm === p ? ' <span class="motm-badge" title="Man of the Match">⭐ MOTM</span>' : ""}</li>`
     ).join("");
+
+    const motmBanner = m.motm
+      ? `<div class="match-detail-motm">⭐ Man of the Match: <strong>${m.motm}</strong></div>`
+      : "";
 
     detail.innerHTML = `
       <td colspan="5">
@@ -231,6 +235,7 @@ function renderMatchHistory(matches) {
             <ul class="player-list">${awayPlayers || "<li>—</li>"}</ul>
           </div>
         </div>
+        ${motmBanner}
       </td>`;
 
     tr.addEventListener("click", () => {
@@ -569,7 +574,7 @@ function computePlayerStats(matches) {
       if (!list) return;
       list.forEach((name) => {
         if (!players[name]) {
-          players[name] = { name, played: 0, wins: 0, draws: 0, losses: 0, teams: {} };
+          players[name] = { name, played: 0, wins: 0, draws: 0, losses: 0, motm: 0, teams: {} };
         }
         const p = players[name];
         p.played++;
@@ -579,6 +584,14 @@ function computePlayerStats(matches) {
         p.teams[teamId] = (p.teams[teamId] || 0) + 1;
       });
     });
+
+    // MOTM
+    if (m.motm) {
+      if (!players[m.motm]) {
+        players[m.motm] = { name: m.motm, played: 0, wins: 0, draws: 0, losses: 0, motm: 0, teams: {} };
+      }
+      players[m.motm].motm++;
+    }
   });
 
   return Object.values(players).sort(
@@ -607,7 +620,7 @@ function renderPlayersTable(matches, teams) {
       <td style="text-align:left;font-weight:600">${p.name}</td>
       <td>${p.played}</td>
       <td class="team-badges-cell">${teamBadges}</td>
-      <td></td>
+      <td>${p.motm > 0 ? `<span class="motm-count">⭐ ${p.motm}</span>` : "—"}</td>
       <td>${p.wins}</td>
       <td>${p.draws}</td>
       <td>${p.losses}</td>

@@ -9,72 +9,86 @@
     {
       "date": "2026-01-05", "home": "amigos", "away": "tunel", "homeGoals": 6,  "awayGoals": 8,
       "homePlayers": ["Avante", "Luis Chiti", "Diogo Massano", "Rui Chiti", "Zé Pinto", "Duarte Lima", "Gonçalo Massano", "Diogo Correia"],
-      "awayPlayers":  ["Wilson Neto", "Garcia", "Peres", "João Tiago", "Francisco", "Filipe Oliveira", "Figueiredo", "Pedro Melo"]
+      "awayPlayers":  ["Wilson Neto", "Garcia", "Peres", "João Tiago", "Francisco", "Filipe Oliveira", "Figueiredo", "Pedro Melo"],
+      "motm": ""
     },
     {
       "date": "2026-01-12", "home": "amigos", "away": "tunel", "homeGoals": 10, "awayGoals": 7,
       "homePlayers": ["Luis Chiti", "Rui Chiti", "Duarte Lima", "Diogo Massano", "Gonçalo Massano", "Zé Pinto", "Marcel Toledo"],
-      "awayPlayers":  ["Wilson Neto", "Gonçalo Neto", "Peres", "Filipe Oliveira", "Francisco", "André Neto", "Gonçalo Neves"]
+      "awayPlayers":  ["Wilson Neto", "Gonçalo Neto", "Peres", "Filipe Oliveira", "Francisco", "André Neto", "Gonçalo Neves"],
+      "motm": ""
     },
     {
       "date": "2026-01-19", "home": "amigos", "away": "tunel", "homeGoals": 1,  "awayGoals": 7,
       "homePlayers": ["Avante", "Luis Chiti", "Rui Chiti", "Diogo Massano", "Gonçalo Massano", "Zé Pinto", "Duarte Lima", "Diogo Correia"],
-      "awayPlayers":  ["Peres", "Garcia", "João Tiago", "Gonçalo Neves", "Anderson Sá", "Pedro Melo", "Filipe Oliveira", "Francisco"]
+      "awayPlayers":  ["Peres", "Garcia", "João Tiago", "Gonçalo Neves", "Anderson Sá", "Pedro Melo", "Filipe Oliveira", "Francisco"],
+      "motm": ""
     },
     {
       "date": "2026-01-26", "home": "amigos", "away": "tunel", "homeGoals": 3,  "awayGoals": 7,
       "homePlayers": ["Avante", "Diogo Massano", "Luis Chiti", "Duarte Lima", "Rui Chiti", "Gonçalo Massano", "Figueiredo", "Zé Pinto"],
-      "awayPlayers":  ["Gonçalo Neves", "Tempero", "Cardoso", "Peres", "Filipe Oliveira", "Anderson Sá", "Francisco", "Duarte Azevedo"]
+      "awayPlayers":  ["Gonçalo Neves", "Tempero", "Cardoso", "Peres", "Filipe Oliveira", "Anderson Sá", "Francisco", "Duarte Azevedo"],
+      "motm": ""
     },
     {
       "date": "2026-02-09", "home": "amigos", "away": "tunel", "homeGoals": 6,  "awayGoals": 8,
       "homePlayers": ["Avante", "Diogo Massano", "Rui Chiti", "Luis Chiti", "Diogo Correia", "Duarte Lima", "Gonçalo Massano"],
-      "awayPlayers":  ["Gonçalo Neto", "Francisco", "Wilson Neto", "André Neto", "Pedro Melo", "Peres", "Filipe Oliveira"]
+      "awayPlayers":  ["Gonçalo Neto", "Francisco", "Wilson Neto", "André Neto", "Pedro Melo", "Peres", "Filipe Oliveira"],
+      "motm": ""
     },
     {
       "date": "2026-02-16", "home": "amigos", "away": "tunel", "homeGoals": 5,  "awayGoals": 6,
       "homePlayers": ["Avante", "Luis Chiti", "Diogo Massano", "Rui Chiti", "Zé Pinto", "Duarte Lima", "Gonçalo Massano", "Anderson Sá"],
-      "awayPlayers":  ["Peres", "Filipe Oliveira", "Garcia", "Tempero", "Pedro Melo", "Diogo Correia", "Novais", "Figueiredo"]
+      "awayPlayers":  ["Peres", "Filipe Oliveira", "Garcia", "Tempero", "Pedro Melo", "Diogo Correia", "Novais", "Figueiredo"],
+      "motm": ""
     },
     {
       "date": "2026-02-23", "home": "amigos", "away": "tunel", "homeGoals": 12, "awayGoals": 8,
       "homePlayers": ["Avante", "Diogo Massano", "Luis Chiti", "Rui Chiti", "Zé Pinto", "Duarte Lima", "Gonçalo Massano", "Dero"],
-      "awayPlayers":  ["Pedro Melo", "Pedro Martinho", "Peres", "João Tiago", "Cardoso", "Filipe Oliveira", "Gonçalo Neves"]
+      "awayPlayers":  ["Pedro Melo", "Pedro Martinho", "Peres", "João Tiago", "Cardoso", "Filipe Oliveira", "Gonçalo Neves"],
+      "motm": ""
     },
     {
       "date": "2026-03-02", "home": "amigos", "away": "tunel", "homeGoals": 7,  "awayGoals": 1,
       "homePlayers": ["Avante", "Diogo Massano", "Luis Chiti", "Marcel Toledo", "Rui Chiti", "Vinicius", "Duarte Lima", "Gonçalo Massano"],
-      "awayPlayers":  ["Peres", "Tempero", "Figueiredo", "Filipe Oliveira", "Diogo Correia", "Pedro Martinho", "João Tiago", "Novais"]
+      "awayPlayers":  ["Peres", "Tempero", "Figueiredo", "Filipe Oliveira", "Diogo Correia", "Pedro Martinho", "João Tiago", "Novais"],
+      "motm": ""
     },
     {
       "date": "2026-03-09", "home": "amigos", "away": "tunel", "homeGoals": 2,  "awayGoals": 9,
       "homePlayers": ["Avante", "Diogo Massano", "Luis Chiti", "Zé Pinto", "Vinicius", "Duarte Lima", "Gonçalo Massano", "Rui Chiti"],
-      "awayPlayers":  ["Filipe Oliveira", "Cardoso", "Pedro Martinho", "Duarte Azevedo", "Pedro Melo", "Diogo Correia", "Marcel Toledo", "Peres"]
+      "awayPlayers":  ["Filipe Oliveira", "Cardoso", "Pedro Martinho", "Duarte Azevedo", "Pedro Melo", "Diogo Correia", "Marcel Toledo", "Peres"],
+      "motm": ""
     },
     {
       "date": "2026-03-16", "home": "amigos", "away": "tunel", "homeGoals": 7,  "awayGoals": 5,
       "homePlayers": ["Avante", "Diogo Massano", "Luis Chiti", "Zé Pinto", "Duarte Lima", "Rui Chiti", "Gonçalo Massano", "Marcel Toledo"],
-      "awayPlayers":  ["Filipe Oliveira", "Pedro Martinho", "Peres", "Diogo Correia", "Anderson Sá", "Pedro Melo", "Gonçalo Neves", "Ricardo Matos"]
+      "awayPlayers":  ["Filipe Oliveira", "Pedro Martinho", "Peres", "Diogo Correia", "Anderson Sá", "Pedro Melo", "Gonçalo Neves", "Ricardo Matos"],
+      "motm": ""
     },
     {
       "date": "2026-03-23", "home": "amigos", "away": "tunel", "homeGoals": 7,  "awayGoals": 16,
       "homePlayers": ["Avante", "Rui Chiti", "Luis Chiti", "Marcel Toledo", "Gonçalo Massano", "Duarte Lima", "Anderson Sá", "Dero"],
-      "awayPlayers":  ["Francisco", "Garcia", "Peres", "Diogo Correia", "João Tiago", "Pedro Martinho", "Pedro Melo", "Filipe Oliveira"]
+      "awayPlayers":  ["Francisco", "Garcia", "Peres", "Diogo Correia", "João Tiago", "Pedro Martinho", "Pedro Melo", "Filipe Oliveira"],
+      "motm": ""
     },
     {
       "date": "2026-03-30", "home": "amigos", "away": "tunel", "homeGoals": 15, "awayGoals": 15,
       "homePlayers": ["Avante", "Cardoso", "Zé Pinto", "Luis Chiti", "Duarte Lima", "Marcel Toledo", "Anderson Sá"],
-      "awayPlayers":  ["Peres", "Pedro Martinho", "Pedro Melo", "Filipe Oliveira", "João Tiago", "Francisco", "Garcia"]
+      "awayPlayers":  ["Peres", "Pedro Martinho", "Pedro Melo", "Filipe Oliveira", "João Tiago", "Francisco", "Garcia"],
+      "motm": ""
     },
     {
       "date": "2026-04-13", "home": "amigos", "away": "tunel", "homeGoals": 5,  "awayGoals": 7,
       "homePlayers": ["Avante", "Rui Chiti", "Zé Pinto", "Luis Chiti", "Duarte Lima", "Marcel Toledo", "Pedro Martinho"],
-      "awayPlayers":  ["Gonçalo Neto", "Gonçalo Neves", "Diogo Correia", "Pedro Melo", "Anderson Sá", "João Tiago", "Wilson Neto"]
+      "awayPlayers":  ["Gonçalo Neto", "Gonçalo Neves", "Diogo Correia", "Pedro Melo", "Anderson Sá", "João Tiago", "Wilson Neto"],
+      "motm": ""
     },
     {
       "date": "2026-04-20", "home": "amigos", "away": "tunel", "homeGoals": 16,  "awayGoals": 9,
       "homePlayers": ["Avante", "Rui Chiti", "Luis Chiti", "Duarte Lima", "Marcel Toledo", "Gonçalo Massano", "Francisco"],
-      "awayPlayers":  ["Gonçalo Neto", "Figueiredo", "Diogo Correia", "Pedro Melo", "Wilson Neto", "Peres", "Filipe Oliveira"]
+      "awayPlayers":  ["Gonçalo Neto", "Figueiredo", "Diogo Correia", "Pedro Melo", "Wilson Neto", "Peres", "Filipe Oliveira"],
+      "motm": "Duarte Lima"
     }
   ]
 }

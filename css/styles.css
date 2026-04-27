@@ -252,6 +252,31 @@ tbody tr:hover           { background: #e8ecf1; }
 
 .match-detail-team-header.team-badge { margin-bottom: 0.5rem; }
 
+/* MOTM */
+.motm-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #b8860b;
+  background: #fffbe6;
+  border: 1px solid #f5d060;
+  border-radius: var(--radius-pill);
+  padding: 0.1rem 0.4rem;
+  white-space: nowrap;
+}
+
+.match-detail-motm {
+  text-align: center;
+  padding: 0.5rem 1rem 0.75rem;
+  font-size: 0.9rem;
+  color: #7a5c00;
+  background: linear-gradient(90deg, transparent, #fff8d0 40%, #fff8d0 60%, transparent);
+}
+
+.motm-count {
+  font-weight: 600;
+  color: #b8860b;
+}
+
 .player-list {
   list-style: none;
   padding: 0;
