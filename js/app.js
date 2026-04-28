@@ -561,6 +561,13 @@ function renderRankings(matches) {
       detail: `${totalGoals} golos em ${matches.length} jogos`,
       mod: "avg",
     },
+    {
+      icon: "🥇",
+      title: "Jogador com mais alcunhas",
+      highlight: "Avante",
+      detail: "Impossível de manter registo, mas tem muitas! 😉",
+      mod: "best",
+    },
   ];
 
   cards.forEach(({ icon, title, highlight, detail, mod }) => {
