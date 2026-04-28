@@ -354,67 +354,84 @@ function renderMonthlySection(matches, teams) {
     applyTooltips(wrapper.querySelector("thead"));
   });
 
-  // Monthly trend charts per team, split by result trends and goal trends
-  teams.forEach((team) => {
-    const resultsCard = document.createElement("div");
-    resultsCard.className = "chart-card";
-    const resultsCanvas = document.createElement("canvas");
-    resultsCard.innerHTML = `<h3>${team.name} – Resultados Mensais</h3>`;
-    resultsCard.appendChild(resultsCanvas);
-    chartsContainer.appendChild(resultsCard);
+  // Combined monthly goals chart – one line per team
+  const goalsCard = document.createElement("div");
+  goalsCard.className = "chart-card";
+  const goalsCanvas = document.createElement("canvas");
+  goalsCard.innerHTML = `<h3>Golos Marcados por Mês</h3>`;
+  goalsCard.appendChild(goalsCanvas);
+  chartsContainer.appendChild(goalsCard);
 
-    const goalsCard = document.createElement("div");
-    goalsCard.className = "chart-card";
-    const goalsCanvas = document.createElement("canvas");
-    goalsCard.innerHTML = `<h3>${team.name} – Golos Mensais</h3>`;
-    goalsCard.appendChild(goalsCanvas);
-    chartsContainer.appendChild(goalsCard);
+  const labels = sortedKeys.map(monthLabel);
 
-    const labels = sortedKeys.map(monthLabel);
-    const winsData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).wins);
-    const drawsData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).draws);
-    const defeatsData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).defeats);
-    const scoredData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).scored);
-    const allowedData = sortedKeys.map((k) => computeTeamStats(months[k], team.name).allowed);
+  new Chart(goalsCanvas, {
+    type: "line",
+    data: {
+      labels,
+      datasets: teams.map((team) => {
+        const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
+        return {
+          label: team.name,
+          data: sortedKeys.map((k) => computeTeamStats(months[k], team.name).scored),
+          borderColor: colors.border,
+          backgroundColor: colors.bg,
+          fill: false,
+          tension: 0.3,
+          pointRadius: 4,
+        };
+      }),
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+    },
+  });
 
-    const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
+  // Combined monthly results chart – wins per team + draws
+  const resultsCard = document.createElement("div");
+  resultsCard.className = "chart-card";
+  const resultsCanvas = document.createElement("canvas");
+  resultsCard.innerHTML = `<h3>Resultados Mensais</h3>`;
+  resultsCard.appendChild(resultsCanvas);
+  chartsContainer.appendChild(resultsCard);
 
-    new Chart(resultsCanvas, {
-      type: "line",
-      data: {
-        labels,
-        datasets: [
-          { label: "Vitórias", data: winsData, borderColor: "#27ae60", backgroundColor: "rgba(39,174,96,0.15)", fill: false, tension: 0.3 },
-          { label: "Empates", data: drawsData, borderColor: "#f39c12", backgroundColor: "rgba(243,156,18,0.15)", fill: false, tension: 0.3 },
-          { label: "Derrotas", data: defeatsData, borderColor: "#e74c3c", backgroundColor: "rgba(231,76,60,0.15)", fill: false, tension: 0.3 },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { position: "bottom" } },
-        scales: {
-          y: { beginAtZero: true, ticks: { stepSize: 1 } },
+  const drawsData = sortedKeys.map((k) => computeTeamStats(months[k], teams[0].name).draws);
+
+  new Chart(resultsCanvas, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [
+        ...teams.map((team) => {
+          const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
+          return {
+            label: `Vitórias ${team.name}`,
+            data: sortedKeys.map((k) => computeTeamStats(months[k], team.name).wins),
+            borderColor: colors.border,
+            backgroundColor: colors.bg,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4,
+          };
+        }),
+        {
+          label: "Empates",
+          data: drawsData,
+          borderColor: "#f39c12",
+          backgroundColor: "rgba(243,156,18,0.15)",
+          fill: false,
+          tension: 0.3,
+          pointRadius: 4,
+          borderDash: [5, 5],
         },
-      },
-    });
-
-    new Chart(goalsCanvas, {
-      type: "line",
-      data: {
-        labels,
-        datasets: [
-          { label: "Golos Marcados", data: scoredData, borderColor: colors.border, backgroundColor: colors.bg, fill: false, tension: 0.3 },
-          { label: "Golos Sofridos", data: allowedData, borderColor: "#999", backgroundColor: "rgba(153,153,153,0.15)", fill: false, tension: 0.3 },
-        ],
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { position: "bottom" } },
-        scales: {
-          y: { beginAtZero: true, ticks: { stepSize: 1 } },
-        },
-      },
-    });
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: "bottom" } },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+    },
   });
 }
 
