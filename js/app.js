@@ -14,6 +14,7 @@ const COLUMN_TOOLTIPS = {
   "Últimos 5": { title: "Últimos 5 Jogos",    desc: null },
   "PPJ":       { title: "Pontos por Jogo",    desc: "Média de pontos ganhos por jogo ao longo da competição.<br/>Os números mais altos indicam a equipa mais forte.<br/>Max. <div class='form-badge--v' style='display: inline; padding: 0.1rem 0.2rem; border-radius: 4px;'>3.00</div> Pontos" },
   "MGJ":       { title: "Média de Golos por Jogo",     desc: "Média total de golos por jogo.<br/>Calculada ao longo da época." },
+  "MGV":       { title: "Média de Golos por Vitória",  desc: "Média de golos marcados nos jogos ganhos.<br/>Indica quantos golos esta equipa precisa, em média, para vencer." },
 };
 
 function applyTooltips(thead) {
@@ -42,7 +43,7 @@ const MONTH_NAMES = [
 /* ---------- helpers ---------- */
 
 function computeTeamStats(matches, teamName) {
-  let wins = 0, draws = 0, defeats = 0, scored = 0, allowed = 0, points = 0;
+  let wins = 0, draws = 0, defeats = 0, scored = 0, allowed = 0, points = 0, goalsInWins = 0;
 
   matches.forEach((m) => {
     const isHome = m.homeTeam === teamName;
@@ -53,6 +54,7 @@ function computeTeamStats(matches, teamName) {
     if (gf > ga) {
       wins++;
       points += 3;
+      goalsInWins += gf;
     } else if (gf === ga) {
       draws++;
       points += 1;
@@ -69,6 +71,8 @@ function computeTeamStats(matches, teamName) {
     scored,
     allowed,
     diff: scored - allowed,
+    goalsInWins,
+    avgGoalsToWin: wins > 0 ? goalsInWins / wins : null,
   };
 }
 
@@ -181,7 +185,8 @@ function renderOverallTable(matches, teams) {
       <td>${s.diff > 0 ? "+" : ""}${s.diff}</td>
       <td class="form-cell">${renderFormBadges(form)}</td>
       <td>${(s.points/s.played).toFixed(2)}</td>
-      <td>${(s.scored/s.played).toFixed(2)}</td>`;
+      <td>${(s.scored/s.played).toFixed(2)}</td>
+      <td>${s.avgGoalsToWin !== null ? s.avgGoalsToWin.toFixed(2) : "—"}</td>`;
     tbody.appendChild(tr);
   });
 }
@@ -326,7 +331,7 @@ function renderMonthlySection(matches, teams) {
           <thead>
             <tr>
               <th>Equipa</th><th>J</th><th>Pts</th><th>V</th><th>E</th><th>D</th>
-              <th>GM</th><th>GS</th><th>DG</th><th>PPJ</th><th>MGJ</th>
+              <th>GM</th><th>GS</th><th>DG</th><th>PPJ</th><th>MGJ</th><th>MGV</th>
             </tr>
           </thead>
           <tbody>
@@ -343,7 +348,8 @@ function renderMonthlySection(matches, teams) {
                   <td>${s.allowed}</td>
                   <td>${s.diff > 0 ? "+" : ""}${s.diff}</td>
                   <td>${(s.points / s.played).toFixed(2)}</td>
-                  <td>${(s.scored / s.played).toFixed(2)}</td>                  
+                  <td>${(s.scored / s.played).toFixed(2)}</td>
+                  <td>${s.avgGoalsToWin !== null ? s.avgGoalsToWin.toFixed(2) : "—"}</td>                  
                 </tr>`
               )
               .join("")}
@@ -437,7 +443,7 @@ function renderMonthlySection(matches, teams) {
 
 /* ---------- rankings ---------- */
 
-function renderRankings(matches) {
+function renderRankings(matches, teams) {
   const container = document.getElementById("rankings-grid");
   container.innerHTML = "";
 
@@ -507,7 +513,7 @@ function renderRankings(matches) {
   const streakDateFmt = (m) => new Date(m.date).toLocaleDateString("pt-PT", { day: "numeric", month: "short", year: "numeric" });
 
   const totalGoals = matches.reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0);
-  const avgGoals   = (totalGoals / matches.length).toFixed(1);
+  const avgGoals   = (totalGoals / matches.length).toFixed(2);
 
   const cards = [
     {
@@ -569,6 +575,23 @@ function renderRankings(matches) {
       mod: "best",
     },
   ];
+
+  // Add one MGV card per team
+  const teamNamesAll = [...new Set(matches.flatMap((m) => [m.homeTeam, m.awayTeam]))];
+  teamNamesAll.forEach((name) => {
+    const teamObj = teams ? teams.find((t) => t.name === name) : null;
+    const tMatches = matches.filter((m) => m.homeTeam === name || m.awayTeam === name);
+    const s = computeTeamStats(tMatches, name);
+    if (s.avgGoalsToWin !== null) {
+      cards.push({
+        icon: "🎯",
+        title: `Golos para vencer — ${name}`,
+        highlight: `${s.avgGoalsToWin.toFixed(2)} golos/vitória`,
+        detail: `${s.goalsInWins} golos em ${s.wins} vitória${s.wins !== 1 ? "s" : ""}`,
+        mod: "avg",
+      });
+    }
+  });
 
   cards.forEach(({ icon, title, highlight, detail, mod }) => {
     const card = document.createElement("div");
