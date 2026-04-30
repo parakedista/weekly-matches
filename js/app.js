@@ -14,7 +14,7 @@ const COLUMN_TOOLTIPS = {
   "Últimos 5": { title: "Últimos 5 Jogos",    desc: null },
   "PPJ":       { title: "Pontos por Jogo",    desc: "Média de pontos ganhos por jogo ao longo da competição.<br/>Os números mais altos indicam a equipa mais forte.<br/>Max. <div class='form-badge--v' style='display: inline; padding: 0.1rem 0.2rem; border-radius: 4px;'>3.00</div> Pontos" },
   "MGJ":       { title: "Média de Golos por Jogo",     desc: "Média total de golos por jogo.<br/>Calculada ao longo da época." },
-  "MGV":       { title: "Média de Golos por Vitória",  desc: "Média de golos marcados nos jogos ganhos.<br/>Indica quantos golos esta equipa precisa, em média, para vencer." },
+  "MGV":       { title: "Média de Golos por Vitória",  desc: "Média de golos marcados nos jogos ganhos.<br/>Indica quantos golos esta equipa marca, em média, por vitória." },
 };
 
 function applyTooltips(thead) {
@@ -374,23 +374,35 @@ function renderMonthlySection(matches, teams) {
     type: "line",
     data: {
       labels,
-      datasets: teams.map((team) => {
-        const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
-        return {
-          label: team.name,
-          data: sortedKeys.map((k) => computeTeamStats(months[k], team.name).scored),
-          borderColor: colors.border,
-          backgroundColor: colors.bg,
+      datasets: [
+        ...teams.map((team) => {
+          const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
+          return {
+            label: team.name,
+            data: sortedKeys.map((k) => computeTeamStats(months[k], team.name).scored),
+            borderColor: colors.border,
+            backgroundColor: colors.bg,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4,
+          };
+        }),
+        {
+          label: "Total de Golos",
+          data: sortedKeys.map((k) => months[k].reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0)),
+          borderColor: "#8e44ad",
+          backgroundColor: "rgba(142,68,173,0.15)",
           fill: false,
           tension: 0.3,
           pointRadius: 4,
-        };
-      }),
+          borderDash: [5, 5],
+        },
+      ],
     },
     options: {
       responsive: true,
       plugins: { legend: { position: "bottom" } },
-      scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+      scales: { y: { beginAtZero: true, ticks: { stepSize: 15 } } },
     },
   });
 
