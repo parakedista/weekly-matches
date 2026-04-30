@@ -316,12 +316,21 @@ function renderMonthlySection(matches, teams) {
   tablesContainer.innerHTML = "";
   chartsContainer.innerHTML = "";
 
+  // Pre-compute stats for every month × team combination once
+  const monthStats = {};
+  sortedKeys.forEach((key) => {
+    monthStats[key] = {};
+    teams.forEach((t) => {
+      monthStats[key][t.name] = computeTeamStats(months[key], t.name);
+    });
+  });
+
   // Monthly tables
   sortedKeys.forEach((key) => {
     const wrapper = document.createElement("div");
     wrapper.className = "monthly-table-wrapper";
     const stats = teams
-      .map((t) => ({ team: t.name, ...computeTeamStats(months[key], t.name) }))
+      .map((t) => ({ team: t.name, ...monthStats[key][t.name] }))
       .sort((a, b) => b.points - a.points || b.scored - a.scored);
 
     wrapper.innerHTML = `
@@ -379,7 +388,7 @@ function renderMonthlySection(matches, teams) {
           const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
           return {
             label: team.name,
-            data: sortedKeys.map((k) => computeTeamStats(months[k], team.name).scored),
+            data: sortedKeys.map((k) => monthStats[k][team.name].scored),
             borderColor: colors.border,
             backgroundColor: colors.bg,
             fill: false,
@@ -414,7 +423,7 @@ function renderMonthlySection(matches, teams) {
   resultsCard.appendChild(resultsCanvas);
   chartsContainer.appendChild(resultsCard);
 
-  const drawsData = sortedKeys.map((k) => computeTeamStats(months[k], teams[0].name).draws);
+  const drawsData = sortedKeys.map((k) => monthStats[k][teams[0].name].draws);
 
   new Chart(resultsCanvas, {
     type: "line",
@@ -425,7 +434,7 @@ function renderMonthlySection(matches, teams) {
           const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
           return {
             label: `Vitórias ${team.name}`,
-            data: sortedKeys.map((k) => computeTeamStats(months[k], team.name).wins),
+            data: sortedKeys.map((k) => monthStats[k][team.name].wins),
             borderColor: colors.border,
             backgroundColor: colors.bg,
             fill: false,
@@ -458,6 +467,12 @@ function renderMonthlySection(matches, teams) {
 function renderRankings(matches, teams) {
   const container = document.getElementById("rankings-grid");
   container.innerHTML = "";
+
+  // Pre-compute overall stats per team once
+  const teamStatsMap = {};
+  teams.forEach((t) => {
+    teamStatsMap[t.name] = computeTeamStats(matches, t.name);
+  });
 
   // --- Month rankings ---
   const months = groupByMonth(matches);
@@ -589,15 +604,12 @@ function renderRankings(matches, teams) {
   ];
 
   // Add one MGV card per team
-  const teamNamesAll = [...new Set(matches.flatMap((m) => [m.homeTeam, m.awayTeam]))];
-  teamNamesAll.forEach((name) => {
-    const teamObj = teams ? teams.find((t) => t.name === name) : null;
-    const tMatches = matches.filter((m) => m.homeTeam === name || m.awayTeam === name);
-    const s = computeTeamStats(tMatches, name);
+  teams.forEach((t) => {
+    const s = teamStatsMap[t.name];
     if (s.avgGoalsToWin !== null) {
       cards.push({
         icon: "🎯",
-        title: `Golos para vencer — ${name}`,
+        title: `Golos para vencer — ${t.name}`,
         highlight: `${s.avgGoalsToWin.toFixed(2)} golos/vitória`,
         detail: `${s.goalsInWins} golos em ${s.wins} vitória${s.wins !== 1 ? "s" : ""}`,
         mod: "avg",
@@ -830,7 +842,7 @@ async function init() {
   renderMatchHistory(matches);
   renderOverallCharts(matches, teams);
   renderMonthlySection(matches, teams);
-  renderRankings(matches);
+  renderRankings(matches, teams);
   renderPlayersTable(matches, teams);
   initTabs();
 }
