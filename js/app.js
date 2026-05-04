@@ -255,6 +255,32 @@ function renderMatchHistory(matches) {
   });
 }
 
+/* ---------- chart helpers ---------- */
+
+/**
+ * Creates a Chart.js line dataset using team colours (or a custom colour).
+ * @param {string} label       - Dataset label shown in the legend.
+ * @param {number[]} data      - Data points array.
+ * @param {string|null} teamId - Key into TEAM_COLORS, or null for a custom colour.
+ * @param {object} overrides   - Any extra Chart.js dataset properties (e.g. borderDash, borderColor).
+ */
+function createLineDataset(label, data, teamId, overrides = {}) {
+  const colors = teamId
+    ? (TEAM_COLORS[teamId] || { bg: "rgba(100,100,100,0.7)", border: "#666" })
+    : { bg: overrides.backgroundColor ?? "rgba(100,100,100,0.15)", border: overrides.borderColor ?? "#666" };
+
+  return {
+    label,
+    data,
+    borderColor: colors.border,
+    backgroundColor: colors.bg,
+    fill: false,
+    tension: 0.3,
+    pointRadius: 4,
+    ...overrides,
+  };
+}
+
 /* ---------- charts ---------- */
 
 function renderOverallCharts(matches, teams) {
@@ -384,28 +410,19 @@ function renderMonthlySection(matches, teams) {
     data: {
       labels,
       datasets: [
-        ...teams.map((team) => {
-          const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
-          return {
-            label: team.name,
-            data: sortedKeys.map((k) => monthStats[k][team.name].scored),
-            borderColor: colors.border,
-            backgroundColor: colors.bg,
-            fill: false,
-            tension: 0.3,
-            pointRadius: 4,
-          };
-        }),
-        {
-          label: "Total de Golos",
-          data: sortedKeys.map((k) => months[k].reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0)),
-          borderColor: "#8e44ad",
-          backgroundColor: "rgba(142,68,173,0.15)",
-          fill: false,
-          tension: 0.3,
-          pointRadius: 4,
-          borderDash: [5, 5],
-        },
+        ...teams.map((team) =>
+          createLineDataset(
+            team.name,
+            sortedKeys.map((k) => monthStats[k][team.name].scored),
+            team.id,
+          )
+        ),
+        createLineDataset(
+          "Total de Golos",
+          sortedKeys.map((k) => months[k].reduce((sum, m) => sum + m.homeGoals + m.awayGoals, 0)),
+          null,
+          { borderColor: "#8e44ad", backgroundColor: "rgba(142,68,173,0.15)", borderDash: [5, 5] },
+        ),
       ],
     },
     options: {
@@ -430,28 +447,19 @@ function renderMonthlySection(matches, teams) {
     data: {
       labels,
       datasets: [
-        ...teams.map((team) => {
-          const colors = TEAM_COLORS[team.id] || { bg: "rgba(100,100,100,0.7)", border: "#666" };
-          return {
-            label: `Vitórias ${team.name}`,
-            data: sortedKeys.map((k) => monthStats[k][team.name].wins),
-            borderColor: colors.border,
-            backgroundColor: colors.bg,
-            fill: false,
-            tension: 0.3,
-            pointRadius: 4,
-          };
-        }),
-        {
-          label: "Empates",
-          data: drawsData,
-          borderColor: "#f39c12",
-          backgroundColor: "rgba(243,156,18,0.15)",
-          fill: false,
-          tension: 0.3,
-          pointRadius: 4,
-          borderDash: [5, 5],
-        },
+        ...teams.map((team) =>
+          createLineDataset(
+            `Vitórias ${team.name}`,
+            sortedKeys.map((k) => monthStats[k][team.name].wins),
+            team.id,
+          )
+        ),
+        createLineDataset(
+          "Empates",
+          drawsData,
+          null,
+          { borderColor: "#f39c12", backgroundColor: "rgba(243,156,18,0.15)", borderDash: [5, 5] },
+        ),
       ],
     },
     options: {
