@@ -34,13 +34,53 @@ body {
 header {
   background: linear-gradient(135deg, #0A0A0A 0%, var(--c-primary) 40%, #2E7D32 100%);
   color: #fff;
-  text-align: center;
-  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  height: 60px;
+  padding: 0 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
-header .logo { max-width: 200px; }
-header h1 { font-size: 2rem; margin-bottom: 0.25rem; }
-header .subtitle { font-size: 1.1rem; opacity: 0.85; }
+header .logo { height: 50px; width: auto; flex-shrink: 0; }
+
+header .tabs {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.25rem;
+}
+
+header .tab-btn {
+  color: rgba(255,255,255,0.75);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 4px 4px 0 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0 0.9rem;
+  height: 60px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+header .tab-btn:hover,
+header .tab-btn--active {
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+}
+
+header .tab-btn--active { border-bottom-color: var(--c-accent); }
 
 main {
   max-width: 1100px;
@@ -423,7 +463,7 @@ footer {
   border-top: 1px solid #ddd;
 }
 
-/* ── Tabs ── */
+/* ── Tabs (inside header) ── */
 .tabs {
   display: flex;
   gap: 0.5rem;
@@ -644,6 +684,9 @@ footer {
 .sp-stat--pct       .sp-stat__value { color: #fde68a; }
 
 @media (max-width: 720px) {
+  header { height: auto; flex-wrap: wrap; padding: 0.5rem 1rem; justify-content: flex-start; }
+  header .tab-btn { height: 44px; }
+  header .tabs { flex-wrap: nowrap; overflow-x: auto; width: 100%; }
   .top-row { flex-direction: column; }
   #next-match { flex: none; width: 100%; }
 }
