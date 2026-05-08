@@ -365,8 +365,8 @@ function renderMonthlySection(matches, teams) {
         <table>
           <thead>
             <tr>
-              <th>Equipa</th><th>J</th><th>Pts</th><th>V</th><th>E</th><th>D</th>
-              <th>GM</th><th>GS</th><th>DG</th><th>PPJ</th><th>MGJ</th><th>MGV</th>
+              <th class="th--first">Equipa</th><th>J</th><th>Pts</th><th>V</th><th>E</th><th>D</th>
+              <th>GM</th><th>GS</th><th>DG</th><th>PPJ</th><th>MGJ</th><th class="th--last">MGV</th>
             </tr>
           </thead>
           <tbody>
@@ -635,6 +635,11 @@ function renderRankings(matches, teams) {
       <div class="ranking-detail">${detail}</div>`;
     container.appendChild(card);
   });
+
+  // If the total number of cards is odd, centre the lone last card
+  if (cards.length % 2 === 1) {
+    container.lastElementChild.classList.add("ranking-card--full-width");
+  }
 }
 
 /* ---------- player stats ---------- */

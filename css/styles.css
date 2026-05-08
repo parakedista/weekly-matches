@@ -482,16 +482,18 @@ a.nm-venue:hover {
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;  /* collapse disables border-radius on cells */
+  border-spacing: 0;
   background: #fff;
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
 }
 
-thead { background: var(--c-primary); color: #fff; }
+thead th { background: var(--c-primary); color: #fff; }
 
-thead tr th:first-child { border-radius: 8px 0 0 0; }
-thead tr th:last-child  { border-radius: 0 8px 0 0; }
+/* Round the outer corners of the header row */
+thead th.th--first { border-radius: 8px 0 0 0; }
+thead th.th--last  { border-radius: 0 8px 0 0; }
 
 th, td { padding: 0.75rem 1rem; text-align: center; }
 
@@ -657,7 +659,7 @@ tbody tr:hover           { background: var(--c-table-hover); }
 }
 
 /* Centre a lone card that falls on an odd row */
-#rankings-grid .ranking-card:last-child:nth-child(odd) {
+.ranking-card--full-width {
   grid-column: 1 / -1;
   max-width: 50%;
   margin: 0 auto;
