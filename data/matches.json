@@ -107,6 +107,12 @@
       "homePlayers": ["Avante", "Luis Chiti", "Duarte Lima", "Marcel Toledo", "Pedro Martinho", "Francisco", "Gonçalo Massano", "Alan"],
       "awayPlayers":  ["João Tiago", "Garcia", "Gonçalo Neves","Pedro Melo", "Peres", "Anderson Sá", "Tempero", "Cardoso"],
       "motm": "Peres"
+    },
+    {
+      "date": "2026-05-25", "home": "amigos", "away": "tunel", "homeGoals":2,  "awayGoals": 4,
+      "homePlayers": ["Avante", "Luis Chiti", "Duarte Lima", "Gonçalo Massano", "Miguel Silvestre", "Pedro Martinho", "Tempero", "Novais"],
+      "awayPlayers":  ["José (GK)", "Anderson Sá", "Gonçalo Neves","Diogo Correia", "Figueiredo", "Garcia", "Ricardo Santos", "Peres"],
+      "motm": ""
     }
   ]
 }
