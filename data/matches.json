@@ -119,6 +119,12 @@
       "homePlayers": ["Avante", "Rui Chiti", "Pedro Martinho", "Miguel Silvestre", "Vinicius", "Luis Chiti", "Duarte Lima", "Gonçalo Massano"],
       "awayPlayers":  ["Filipe", "Pedro Melo", "Garcia","Diogo Correia", "Peres", "Anderson Sá", "João Tiago", "Ricardo Santos"],
       "motm": "Anderson Sá"
+    },
+    {
+      "date": "2026-06-08", "home": "amigos", "away": "tunel", "homeGoals":6,  "awayGoals": 8,
+      "homePlayers": ["Avante", "Vinicius", "Zé Pinto", "Luis Chiti", "Miguel Silvestre", "Pedro Martinho", "João Madeira", "Anderson Sá"],
+      "awayPlayers":  ["Cardoso", "Figueiredo", "João Tiago","Peres", "Ricardo Santos", "Pedro Melo", "Diogo Correia", "José (GK)"],
+      "motm": "Cardoso"
     }
   ]
 }
