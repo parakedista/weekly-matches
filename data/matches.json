@@ -111,20 +111,26 @@
     {
       "date": "2026-05-25", "home": "amigos", "away": "tunel", "homeGoals":2,  "awayGoals": 4,
       "homePlayers": ["Avante", "Luis Chiti", "Duarte Lima", "Gonçalo Massano", "Miguel Silvestre", "Pedro Martinho", "Tempero", "Novais"],
-      "awayPlayers":  ["José (GK)", "Anderson Sá", "Gonçalo Neves","Diogo Correia", "Figueiredo", "Garcia", "Ricardo Santos", "Peres"],
+      "awayPlayers":  ["José (GK)", "Anderson Sá", "Gonçalo Neves", "Diogo Correia", "Figueiredo", "Garcia", "Ricardo Santos", "Peres"],
       "motm": "José (GK)"
     },
     {
       "date": "2026-06-01", "home": "amigos", "away": "tunel", "homeGoals":2,  "awayGoals": 10,
       "homePlayers": ["Avante", "Rui Chiti", "Pedro Martinho", "Miguel Silvestre", "Vinicius", "Luis Chiti", "Duarte Lima", "Gonçalo Massano"],
-      "awayPlayers":  ["Filipe", "Pedro Melo", "Garcia","Diogo Correia", "Peres", "Anderson Sá", "João Tiago", "Ricardo Santos"],
+      "awayPlayers":  ["Filipe", "Pedro Melo", "Garcia", "Diogo Correia", "Peres", "Anderson Sá", "João Tiago", "Ricardo Santos"],
       "motm": "Anderson Sá"
     },
     {
       "date": "2026-06-08", "home": "amigos", "away": "tunel", "homeGoals":6,  "awayGoals": 8,
       "homePlayers": ["Avante", "Vinicius", "Zé Pinto", "Luis Chiti", "Miguel Silvestre", "Pedro Martinho", "João Madeira", "Anderson Sá"],
-      "awayPlayers":  ["Cardoso", "Figueiredo", "João Tiago","Peres", "Ricardo Santos", "Pedro Melo", "Diogo Correia", "José (GK)"],
+      "awayPlayers":  ["Cardoso", "Figueiredo", "João Tiago", "Peres", "Ricardo Santos", "Pedro Melo", "Diogo Correia", "José (GK)"],
       "motm": "Cardoso"
+    },
+    {
+      "date": "2026-06-15", "home": "amigos", "away": "tunel", "homeGoals":6,  "awayGoals": 4,
+      "homePlayers": ["Avante", "Vinicius", "Zé Pinto", "Luis Chiti", "Miguel Silvestre", "Pedro Martinho", "Anderson Sá", "Duarte Lima", "Gonçalo Massano"],
+      "awayPlayers":  ["Figueiredo", "João Tiago", "Peres", "Ricardo Santos", "Pedro Melo", "Diogo Correia", "José (GK)", "Filipe Oliveira", "Gonçalo Neves"],
+      "motm": "Gonçalo Massano"
     }
   ]
 }
